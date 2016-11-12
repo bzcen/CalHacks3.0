@@ -19,6 +19,9 @@ var average_fear;
 var average_joy;
 var average_sadness;
 
+// jank af way of handling asynch issues
+var isAnalyzingTone = false;
+
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
@@ -34,9 +37,9 @@ function analyzeTone(paragraph) {
   };
 
   toneAnalyzer.tone(params, function (err, analysis) {
-    if (err)
+    if (err) {
       console.log('error:', err);
-    else
+    } else {
       console.log(JSON.stringify(analysis, null, 2));
       var tones = analysis.document_tone.tone_categories[0].tones;
       average_anger += tones[0].score;
@@ -44,9 +47,11 @@ function analyzeTone(paragraph) {
       average_fear += tones[2].score;
       average_joy += tones[3].score;
       average_sadness += tones[4].score;
+
+    }
+
   });
 }
-
 
 var maxDocs = 2;
 var startTime = 'now-12h';
@@ -133,6 +138,8 @@ app.get('/', function(req, res) {
 app.get('/description', function(req, res) {
     app.set('views', __dirname + "/public/template");
     console.log('Base name:' + __dirname);
+        processNews(search);
+
     res.sendFile(TEMPLATE_DIR + 'description.html');
 });
 
@@ -171,7 +178,6 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    processNews(search);
     // look for all the fittings here
     var re = /\0/g;
 
