@@ -22,15 +22,17 @@ var average_sadness;
 // trashy way of handling asynch issues
 var counter = 0;
 var myQuery;
+// mapped object of all of the discovered values
+var analyzedValues;
 
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
-  username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
-  password: 'nFuykKJpWZmg',
+  username: 'c748a5a5-257c-4171-9644-bddc1ce715f2',
+  password: 'z2YjIdQoJFPx',
   version_date: '2016-05-19'
 });
 
-function analyzeTone(paragraph) {
+function analyzeTone(paragraph, res) {
   var params = {
     text: paragraph,
     tones: 'emotion',
@@ -51,23 +53,23 @@ function analyzeTone(paragraph) {
       counter += 1;
       // once all asynch calls are done, call final output calculation function
       if (counter => maxDocs) {
-        finalCalc();
+        finalCalc(res);
       }
     }
 
   });
 }
 
-var maxDocs = 2;
+var maxDocs = 1;
 var startTime = 'now-12h';
 var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
-  api_key: 'cb873efd5b3a458bfaf914ec040c1e490d61c92a'
+  api_key: '641dfd0e780764fb42517294d35c4d9ab8e56641'
 });
 
-function processNews(query) {
+function processNews(query, res) {
 
   myQuery = query;
   // create a new Alchemy News query using search term
@@ -98,12 +100,12 @@ function processNews(query) {
         console.log(s);
         average_sentiment += s;
         // update global average values
-        analyzeTone(news.result.docs[i].source.enriched.url.text);
+        analyzeTone(news.result.docs[i].source.enriched.url.text, res);
       }
   });
 }
 
-function finalCalc() {
+function finalCalc(res) {
   // FINAL AVERAGE VALUES
   average_sentiment /= maxDocs;
   average_joy /= maxDocs;
@@ -124,6 +126,27 @@ function finalCalc() {
   console.log(average_disgust);
   console.log('AVERAGE ANGER OF TEXT IS...');
   console.log(average_joy); 
+
+  analyzedValues = {
+    avg_sentiment: average_sentiment,
+    avg_joy: average_joy,
+    avg_sadness: average_sadness,
+    avg_fear: average_fear,
+    avg_anger: average_anger,
+    avg_disgust: average_disgust
+  };
+
+  fs.readFile('public/template/description.html', 'utf-8', function(err, content) {
+          if (err) {
+             console.log(err);
+             res.end("Error: Check Server command logs");
+            return;
+          }
+          console.log('rendered');
+            var renderedHtml = ejs.render(content, {sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            //get redered HTML code
+            res.end(renderedHtml);
+  });
 }
 
 
@@ -156,9 +179,10 @@ app.get('/description',
         app.set('views', __dirname + "/public/template");
         console.log('Base name:' + __dirname);
 
-        processNews(req.form.name);
+        processNews(req.form.name, res);
 
-        res.sendFile(TEMPLATE_DIR + 'description.html');
+
+
 });
 
 var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
