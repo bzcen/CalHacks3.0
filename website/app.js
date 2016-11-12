@@ -64,20 +64,36 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    // create a new Alchemy News query using search term
-    var params = {
-  		start: 'now-1d',
-  		end: 'now',
-  		count: maxDocs,
-  		'q.enriched.url.title': search,
-  		return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
-	};
-    alchemy_data_news.getNews(params, function (err, news) {
-  	if (err)
-    	console.log('error:', err);
-  	else
-  		// returns news
-    	console.log(JSON.stringify(news, null, 2));
+
+    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
+  }
+);
+
+var marchantData = {
+  "merchant_id": "string",
+  "medium": "balance",
+  "purchase_date": "2016-11-12",
+  "amount": 0.01,
+  "description": "string"
+}
+
+function processNews(maxDocs, query) {
+
+  // create a new Alchemy News query using search term
+  var params = {
+      start: 'now-1d',
+      end: 'now',
+      count: maxDocs,
+      'q.enriched.url.title': search,
+      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
+  };
+
+  alchemy_data_news.getNews(params, function (err, news) {
+    if (err)
+      console.log('error:', err);
+    else
+      // returns news
+      console.log(JSON.stringify(news, null, 2));
 
       var average_sentiment = 0;
 
@@ -90,18 +106,7 @@ app.get('/searchforms',
       average_sentiment /= maxDocs;
       console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
       console.log(average_sentiment);
-	});
-
-    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
-  }
-);
-
-var marchantData = {
-  "merchant_id": "string",
-  "medium": "balance",
-  "purchase_date": "2016-11-12",
-  "amount": 0.01,
-  "description": "string"
+  });
 }
 
 function buyCapitalOne(account, amount) {
