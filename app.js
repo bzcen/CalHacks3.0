@@ -3,8 +3,11 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var path = require('path');
+var jsdom = require('jsdom');
+var fs = require('fs');
 
 var TEMPLATE_DIR =  __dirname + '/template/'
+
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/template");
@@ -13,6 +16,8 @@ app.get('/', function(req, res) {
 	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
+
+var resultElement = fs.readFileSync("template/result_element.html", "utf8");
 
 app.get('/index', function(req, res) {
 	res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
