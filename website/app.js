@@ -1,9 +1,7 @@
 var http = require('http');
-//var html = require('html');
 var express = require('express');
 var app = express();
 var path = require('path');
-var jsdom = require('jsdom');
 var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
@@ -17,21 +15,28 @@ var options = {
   method: 'GET'
 };
 
-var TEMPLATE_DIR =  __dirname + '/template/'
+var TEMPLATE_DIR =  __dirname + '/public/template/'
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-	app.set('views', __dirname + "/template");
-	//app.use('/css', express.static(path.join(__dirname, 'public/css')));
-	app.use(express.static(path.join(__dirname, 'public')));
+	app.set('views', __dirname + "/public/template");
 	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-var resultElement = fs.readFileSync("template/result_element.html", "utf8");
+var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
 
+app.get('/test', function(req, res, next) {
+	//var html = fs.readFileSync("public/template/result_element.html", "utf8");
+	//res.send(html);
+	res.sendFile(TEMPLATE_DIR + 'result_element.html');
+});
+
+/*
 app.get('/index', function(req, res) {
 	res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
-});
+});*/
 
 app.get('/searchforms', 
   form(
