@@ -3,8 +3,6 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
-<<<<<<< HEAD
-
 		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
@@ -28,33 +26,66 @@
         'signInOptions': [
           // Leave the lines as is for the providers you want to offer your users.
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-          firebase.auth.GithubAuthProvider.PROVIDER_ID,
           firebase.auth.EmailAuthProvider.PROVIDER_ID
         ],
+        'signInFlow' : 'popup',
         // Terms of service url.
         'tosUrl': '/#',
       };
       	var ui = new firebaseui.auth.AuthUI(firebase.auth());
       	ui.start('#firebaseui-auth-container', uiConfig);
+
+      	initApp = function() { 
+      		firebase.auth().onAuthStateChanged(function(user) {
+      			if(user) {
+      				console.log("log in successful");
+      				document.getElementById("firebaseui-auth-container").style.display="none";
+      				document.getElementById("sign-in-button").style.display="none";
+      				document.getElementById("signed-in-status").style.display="inline-block";
+					document.getElementById("signed-in-status").textContent = 
+					'Signed in as: ' + user.email;
+      				document.getElementById("sign-out-button").style.display="inline-block";
+      				console.log("end log in successful");
+
+      			} else {
+      				console.log("signed out");
+      				document.getElementById("sign-in-button").style.display="inline-block";
+      				document.getElementById("signed-in-status").style.display="none";
+      				document.getElementById("sign-out-button").style.display="none";
+      				console.log("end signed out successful");
+      			}
+      		});
+      	}
+
+      	var showSignInOptions = function() {
+      		document.getElementById("sign-in-button").style.display="none";
+      		document.getElementById("firebaseui-auth-container").style.display="inline-block";
+      	}
+
+      	var signOut = function() {
+      		firebase.auth().signOut().then(function() {
+			  console.log('Signed Out');
+			}, function(error) {
+			  console.error('Sign Out Error', error);
+			});
+      	}
+
+      	window.addEventListener('load', function() {
+      		initApp();
+      	})
+      
+
       </script>
 
 	</head>	
 	<body>
-
-		<div id="firebaseui-auth-container"></div>
-
-        <div class="jumbotron text-center">
-        	<div id="titleText">
-                <h1>Charity Statement</h1>
-        <link href="/css/button.css" rel="stylesheet">
-	</head>	
+    <link href="/css/button.css" rel="stylesheet">
 	<body style="background-color: #001f3f">
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+		<div id="signin-container"> <div id="signed-in-status" style="color: white; display:inline-block;"> </div> <a href="#" style="color:white; display:none;" id="sign-out-button" onClick="signOut()"> (Sign out)</a> </div>
+		<button id="sign-in-button" type="button" class="btn btn-default" style="margin-bottom:20px"
+		onClick="showSignInOptions()"> Sign in </button>
+		<div id="firebaseui-auth-container"> </div>
+
         <div class="jumbotron" style="background-color: #001f3f">
         	<div id="titleText" style="text-align: center">
                 <h1 id="button" style="color: #ffffff">Donation Tracker</h1>
@@ -65,25 +96,6 @@
 		<form action="searchforms">
             <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
 			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem"/>
-            </div>
-		</form>
-
-		<div class="container" ng-controller="CharityCtrl" >
-			<button id="addAndy" type="button" class="btn btn-default" ng-click="addAndy()">
-				Add Element Test
-			</button>
-			<div id="#results">
-				<div ng-bind-html="htmlToAdd"></div>
-			</div>
-			<br>
-			<button type="button" class="btn btn-default" ng-click="makeDonation()"> 
-				{{"Donate to: " + charityname}}
-			</button>
-		</div>
-
-		<a style="margin-left: 30px" href="/payment"> Test </a>
-            <div style="margin-left: 140px; margin-right: 140px" class="form-group row">
-			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
             </div>
 		</form>
 

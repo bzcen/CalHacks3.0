@@ -248,14 +248,6 @@ app.get('/searchforms',
     //res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
-app.all("/*", function(req, res, next) {
-	res.sendFile("index.html", {root: __dirame + "/template"});
-});
-
-app.use(app.router);
-app.get('/', routes.index);
-app.get('template/partials/:name', routes.partials);
-app.get('*', routes.index);
 
 
 var marchantData = {
