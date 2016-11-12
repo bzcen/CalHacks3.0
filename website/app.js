@@ -143,7 +143,7 @@ app.get('/searchforms',
               return;
             }
 
-            var renderedHtml = ejs.render(content, {name : search, desc : "N/A"});  //get redered HTML code
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A"});  //get redered HTML code
             res.end(renderedHtml);
         });
     });
