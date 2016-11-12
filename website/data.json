@@ -1,6 +1,25 @@
 {
-    "id": 1,
-    "name": "Red Cross",
-    "desc": "The American Red Cross, also known as the American National Red Cross, is a humanitarian organization that provides emergency assistance, disaster relief and education in the United States.",
-    "img": "https://www.redcross.org/images/MEDIA_CustomProductCatalog/m48040100_ButtonLogo200.jpg"
+    "id": 4,
+    "values" : [
+        {
+            "name": "Red Cross",
+            "desc": "The American Red Cross, also known as the American National Red Cross, is a humanitarian organization that provides emergency assistance, disaster relief and education in the United States.",
+            "img": "https://www.redcross.org/images/MEDIA_CustomProductCatalog/m48040100_ButtonLogo200.jpg"
+        },
+        {
+            "name": "Hope For Haiti",
+            "desc": "We work to improve the quality of life for the Haitian people, particularly children.",
+            "img": "http://www.thecreativebodega.com/nicheonline/wp-content/uploads/2013/04/hope-for-haiti.jpg"
+        },
+        {
+            "name": "Feeding America",
+            "desc": "Feeding America is a hunger organization with a nationwide network of food banks feeding the hungry.",
+            "img": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Feeding_America_logo.svg/1280px-Feeding_America_logo.svg.png"
+        },
+        {
+            "name": "Salvation Army",
+            "desc": "The Salvation Army is a Christian church and international charitable organisation structured in a quasi-military fashion.",
+            "img": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/The_Salvation_Army.svg/868px-The_Salvation_Army.svg.png"
+        }
+    ]
 }

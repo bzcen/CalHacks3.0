@@ -81,7 +81,7 @@ function processNews(query, res) {
       end: endTime,
       count: maxDocs,
       'q.enriched.url.title': query,
-      return: 'enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.docSentiment'
+      return: 'enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.docSentiment,enriched.url.keywords.keyword.text'
   };
 
   alchemy_data_news.getNews(params, function (err, news) {
@@ -90,6 +90,11 @@ function processNews(query, res) {
     else
       // returns news
       console.log(JSON.stringify(news, null, 2));
+
+      // if not enough to fill maxDocs, then error out
+      if (maxDocs > news.result.docs.length) {
+        console.log('NOT ENOUGH DATA POINTS FOUND');
+      }
 
       average_sentiment = 0;
       average_sadness = 0;
@@ -110,11 +115,17 @@ function processNews(query, res) {
 function finalCalc(res) {
   // FINAL AVERAGE VALUES
   average_sentiment /= maxDocs;
+  average_sentiment = average_sentiment.toFixed(2);
   average_joy /= maxDocs;
+  average_joy = average_joy.toFixed(2);
   average_sadness /= maxDocs;
+  average_sadness = average_sadness.toFixed(2);
   average_fear /= maxDocs;
+  average_fear = average_fear.toFixed(2);
   average_anger /= maxDocs;
+  average_anger = average_anger.toFixed(2);
   average_disgust /= maxDocs;
+  average_disgust /= average_digust.toFixed(2);
 
   console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');
   console.log(average_sentiment);
