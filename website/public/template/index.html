@@ -10,82 +10,87 @@
 		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
 		<script>
 		  // Initialize Firebase
-		  var config = {
-		    apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
-		    authDomain: "charitystatement.firebaseapp.com",
-		    databaseURL: "https://charitystatement.firebaseio.com",
-		    storageBucket: "charitystatement.appspot.com",
-		    messagingSenderId: "693936859765"
-		  };
-		  firebase.initializeApp(config);
-		  console.log("firebase loaded.. theoreticallyy")
-		</script>
+		//   var config = {
+		//     apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
+		//     authDomain: "charitystatement.firebaseapp.com",
+		//     databaseURL: "https://charitystatement.firebaseio.com",
+		//     storageBucket: "charitystatement.appspot.com",
+		//     messagingSenderId: "693936859765"
+		//   };
+		//   firebase.initializeApp(config);
+		//   console.log("firebase loaded.. theoreticallyy")
+		// </script>
 		<script>
-		var uiConfig = {
-        'signInSuccessUrl': '/',
-        'signInOptions': [
-          // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
-        ],
-        'signInFlow' : 'popup',
-        // Terms of service url.
-        'tosUrl': '/#',
-      };
-      	var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      	ui.start('#firebaseui-auth-container', uiConfig);
+		// var uiConfig = {
+  //       'signInSuccessUrl': '/',
+  //       'signInOptions': [
+  //         // Leave the lines as is for the providers you want to offer your users.
+  //         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  //         firebase.auth.EmailAuthProvider.PROVIDER_ID
+  //       ],
+  //       'signInFlow' : 'popup',
+  //       // Terms of service url.
+  //       'tosUrl': '/#',
+  //     };
+  //     	var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  //     	ui.start('#firebaseui-auth-container', uiConfig);
 
-      	initApp = function() { 
-      		firebase.auth().onAuthStateChanged(function(user) {
-      			if(user) {
-      				console.log("log in successful");
-      				document.getElementById("firebaseui-auth-container").style.display="none";
-      				document.getElementById("sign-in-button").style.display="none";
-      				document.getElementById("signed-in-status").style.display="inline-block";
-					document.getElementById("signed-in-status").textContent = 
-					'Signed in as: ' + user.email;
-      				document.getElementById("sign-out-button").style.display="inline-block";
-      				console.log("end log in successful");
+  //     	initApp = function() { 
+  //     		firebase.auth().onAuthStateChanged(function(user) {
+  //     			if(user) {
+  //     				console.log("log in successful");
+  //     				document.getElementById("firebaseui-auth-container").style.display="none";
+  //     				document.getElementById("sign-in-button").style.display="none";
+  //     				document.getElementById("signed-in-status").style.display="inline-block";
+		// 			document.getElementById("signed-in-status").textContent = 
+		// 			'Signed in as: ' + user.email;
+  //     				document.getElementById("sign-out-button").style.display="inline-block";
+  //     				console.log("end log in successful");
 
-      			} else {
-      				console.log("signed out");
-      				document.getElementById("sign-in-button").style.display="inline-block";
-      				document.getElementById("signed-in-status").style.display="none";
-      				document.getElementById("sign-out-button").style.display="none";
-      				console.log("end signed out successful");
-      			}
-      		});
-      	}
+  //     			} else {
+  //     				console.log("signed out");
+  //     				document.getElementById("sign-in-button").style.display="inline-block";
+  //     				document.getElementById("signed-in-status").style.display="none";
+  //     				document.getElementById("sign-out-button").style.display="none";
+  //     				console.log("end signed out successful");
+  //     			}
+  //     		});
+  //     	}
 
-      	var showSignInOptions = function() {
-      		document.getElementById("sign-in-button").style.display="none";
-      		document.getElementById("firebaseui-auth-container").style.display="inline-block";
-      	}
+  //     	var showSignInOptions = function() {
+  //     		document.getElementById("sign-in-button").style.display="none";
+  //     		document.getElementById("firebaseui-auth-container").style.display="inline-block";
+  //     	}
 
-      	var signOut = function() {
-      		firebase.auth().signOut().then(function() {
-			  console.log('Signed Out');
-			}, function(error) {
-			  console.error('Sign Out Error', error);
-			});
-      	}
+  //     	var signOut = function() {
+  //     		firebase.auth().signOut().then(function() {
+		// 	  console.log('Signed Out');
+		// 	}, function(error) {
+		// 	  console.error('Sign Out Error', error);
+		// 	});
+  //     	}
 
-      	window.addEventListener('load', function() {
-      		initApp();
-      	})
-      
+  //     	window.addEventListener('load', function() {
+  //     		initApp();
+  //     	});
 
-      </script>
+
+       </script>
 
 	</head>	
 	<body>
     <link href="/css/button.css" rel="stylesheet">
 	<body style="background-color: #001f3f">
-		<div id="signin-container"> <div id="signed-in-status" style="color: white; display:inline-block;"> </div> <a href="#" style="color:white; display:none;" id="sign-out-button" onClick="signOut()"> (Sign out)</a> </div>
-		<button id="sign-in-button" type="button" class="btn btn-default" style="margin-bottom:20px"
-		onClick="showSignInOptions()"> Sign in </button>
-		<div id="firebaseui-auth-container"> </div>
-
+		<div ng-controller="CharityCtrl" >
+			<div id="signin-container"> 
+				<div id="signed-in-status" style="color: white; display:inline-block;"> 
+				</div> 
+				 <a href="#" style="color:white; display:none;" id="sign-out-button" ng-click="signOut()"> (Sign out)</a> 
+			</div>
+			<button id="sign-in-button" type="button" class="btn btn-default" style="margin-bottom:20px"
+			ng-click="showSignInOptions()"> Sign in </button>
+			<div id="firebaseui-auth-container" style="display:none"> </div>
+		</div>
         <div class="jumbotron" style="background-color: #001f3f">
         	<div id="titleText" style="text-align: center">
                 <h1 id="button" style="color: #ffffff">Donation Tracker</h1>
