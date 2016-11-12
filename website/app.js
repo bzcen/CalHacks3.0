@@ -8,6 +8,8 @@ var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
 var https = require('https');
+var unirest = require('unirest');
+var json = require ('json');
 
 var field = form.field;
 app.use(bodyParser());
@@ -123,7 +125,7 @@ function finalCalc() {
   console.log('AVERAGE DISGUST OF TEXT IS...');
   console.log(average_disgust);
   console.log('AVERAGE ANGER OF TEXT IS...');
-  console.log(average_joy); 
+  console.log(average_joy);
 }
 
 
@@ -143,8 +145,8 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-app.get('/description', 
-    
+app.get('/description',
+
     form(
         field('name').trim()
     ),
@@ -182,8 +184,36 @@ app.get('/payment', function(req, res) {
 });
 
 app.post('/process-card', function(req, res) {
-  var nonce = req.body.nonce
-  res.send(nonce);
+  var card_nonce = req.body.nonce
+
+  var access_token = 'sandbox-sq0atb-qnEQHbUhWZ-OwIUzOleOCg'
+
+  var location_id = unirest.get('https://connect.squareup.com/v2/locations', headers= {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ' + access_token
+  })
+
+  // var donation = req.body.donation
+
+  var response = unirest.post('https://connect.squareup.com/v2/locations/' + location_id + '/transactions',
+    headers={
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + access_token,
+    },
+    params = JSON.stringify({
+      'card_nonce': card_nonce,
+      'amount_money': {
+        // 'amount': donation,
+        'amount': 100,
+        'currency': 'USD'
+      }
+      // 'idempotency_key': str(uuid.uuid1())
+    })
+  )
+
+  res.sendFile(TEMPLATE_DIR + 'thank_you.html');
+
 })
 
 
