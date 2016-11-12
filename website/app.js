@@ -9,8 +9,16 @@ var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
 var https = require('https');
+
 var field = form.field;
 app.use(bodyParser());
+
+
+
+var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
+var alchemy_data_news = new AlchemyDataNewsV1({
+  api_key: '6896e3e3058a27db83a2ba7773c742f272d6451d'
+});
 
 var options = {
   host: 'datapiece.bluemix.net',
@@ -28,7 +36,7 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-var resultElement = fs.readFileSync("template/result_element.html", "utf8");
+//var resultElement = fs.readFileSync("template/result_element.html", "utf8");
 
 app.get('/index', function(req, res) {
 	res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
@@ -41,20 +49,24 @@ app.get('/searchforms',
 
   function(req, res){
     console.log(req.form.searchItem);
-    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
-	var req = https.request(options, function(res) {
-	  console.log('STATUS: ' + res.statusCode);
-	  console.log('HEADERS: ' + JSON.stringify(res.headers));
-	  res.setEncoding('utf8');
-	  res.on('data', function (chunk) {
-		console.log('BODY: ' + chunk);
-	  });
 
-	  req.on('error', function(e) {
-	    console.log('problem with request: ' + e.message);
-	  });
-
+    // create a new Alchemy News query using search term
+    var params = {
+  		start: 'now-1d',
+  		end: 'now',
+  		count: 2,
+  		'q.enriched.url.title': req.form.searchItem,
+  		return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
+	};
+    alchemy_data_news.getNews(params, function (err, news) {
+  	if (err)
+    	console.log('error:', err);
+  	else
+  		// returns news
+    	console.log(JSON.stringify(news, null, 2));
 	});
+
+    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
 
