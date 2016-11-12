@@ -1,6 +1,6 @@
 'use strict';
 
-var AlchemyDataNewsV1 = require('watson-developer-cloud/alchemy-data-news/v1');
+var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 
 var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: 'fa9a8e16908f16fcdd14d9c41da037cdd19b16c0'
@@ -11,7 +11,7 @@ var alchemy_data_news = new AlchemyDataNewsV1({
 var params = {
   start: 'now-1d',
   end: 'now',
-  count: 100,
+  count: 1,
   'q.enriched.url.enrichedTitle.relations.relation': '|action.verb.text=acquire,object.entities.entity.type=Company|',
   return: 'enriched.url.title'
 };
