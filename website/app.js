@@ -12,6 +12,27 @@ var https = require('https');
 var field = form.field;
 app.use(bodyParser());
 
+var ToneAnalyzerV3 = require('tone-analyzer/v3');
+var toneAnalyzer = new ToneAnalyzerV3({
+  username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
+  password: 'nFuykKJpWZmg',
+  version_date: '2016-05-19'
+});
+
+function analyzeTone(paragraph) {
+  var params = {
+    text: paragraph
+  };
+
+  toneAnalyzer.tone(params, function (err, analysis) {
+    if (err)
+      console.log('error:', err);
+    else
+      console.log(JSON.stringify(analysis, null, 2));
+  });
+}
+
+
 var maxDocs = 2;
 var startTime = 'now-12h';
 var endTime = 'now';
@@ -29,7 +50,7 @@ function processNews(query) {
       end: endTime,
       count: maxDocs,
       'q.enriched.url.title': query,
-      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment,enriched.url.keywords'
+      return: 'enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.docSentiment'
   };
 
   alchemy_data_news.getNews(params, function (err, news) {
@@ -45,13 +66,17 @@ function processNews(query) {
         var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         console.log(s);
         average_sentiment += s;
+        console.log('TONE ANALYSIS OF THE INITIAL TEXT');
+        console.log(analyzeTone(news.result.docs[i].source.enriched.url.text));
       }
 
+      // FINAL AVERAGE SENTIMENT VALUE
       average_sentiment /= maxDocs;
       console.log('AVERAGE SENTIMENT OF ' + query + ' IS...');
       console.log(average_sentiment);
   });
 }
+
 
 var options = {
   host: 'datapiece.bluemix.net',
