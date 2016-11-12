@@ -6,7 +6,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "express-form": "^0.12.6"
+    "express-form": "^0.12.6",
+    "jsdom": "^9.8.3"
   },
   "devDependencies": {},
   "scripts": {
