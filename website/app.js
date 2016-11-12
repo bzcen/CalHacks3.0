@@ -176,8 +176,27 @@ app.use("/partials", express.static(__dirname+"/template/partials"));
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
-	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
+});
+
+app.get('/dashboards', function(req,res) {
+    // grab users
+    // grab a list of product names
+    // open the doc and get the data
+    //
+    // pass it 
+    fs.readFile('public/template/dashboards.html', 'utf-8', function(err, content) {
+        if (err) {
+          console.log(err);
+          res.end("Error: Check Server command logs");
+          return;
+        }
+
+        console.log(search);
+        var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img});  //get redered HTML code
+        res.end(renderedHtml);
+    });
+    return;
 });
 
 app.get('/description',
