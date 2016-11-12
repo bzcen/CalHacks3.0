@@ -19,6 +19,38 @@ var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '6896e3e3058a27db83a2ba7773c742f272d6451d'
 });
 
+function processNews(numDocs, query) {
+
+  // create a new Alchemy News query using search term
+  var params = {
+      start: 'now-1d',
+      end: 'now',
+      count: numDocs,
+      'q.enriched.url.title': query,
+      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
+  };
+
+  alchemy_data_news.getNews(params, function (err, news) {
+    if (err)
+      console.log('error:', err);
+    else
+      // returns news
+      console.log(JSON.stringify(news, null, 2));
+
+      var average_sentiment = 0;
+
+      for (var i = 0; i < maxDocs; i++) {
+        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        console.log(s);
+        average_sentiment += s;
+      }
+
+      average_sentiment /= maxDocs;
+      console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
+      console.log(average_sentiment);
+  });
+}
+
 var options = {
   host: 'datapiece.bluemix.net',
   port: 443,
@@ -64,6 +96,7 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
+    // processNews(maxDocs, search);
 
     res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
@@ -77,37 +110,7 @@ var marchantData = {
   "description": "string"
 }
 
-function processNews(maxDocs, query) {
 
-  // create a new Alchemy News query using search term
-  var params = {
-      start: 'now-1d',
-      end: 'now',
-      count: maxDocs,
-      'q.enriched.url.title': search,
-      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
-  };
-
-  alchemy_data_news.getNews(params, function (err, news) {
-    if (err)
-      console.log('error:', err);
-    else
-      // returns news
-      console.log(JSON.stringify(news, null, 2));
-
-      var average_sentiment = 0;
-
-      for (var i = 0; i < maxDocs; i++) {
-        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
-        console.log(s);
-        average_sentiment += s;
-      }
-
-      average_sentiment /= maxDocs;
-      console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
-      console.log(average_sentiment);
-  });
-}
 
 function buyCapitalOne(account, amount) {
     request.post('http://api.reimaginebanking.com/accounts/' + account + '/purchases?key=96369a6506e9cc642c1ed4e633081c82')
