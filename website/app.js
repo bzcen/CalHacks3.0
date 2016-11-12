@@ -90,7 +90,7 @@ function buyCapitalOne(account, amount) {
 	.end(function(err, res){
 		//idfk, do something if you buy something
     });
-});
+};
 
 // request at bluemix instance
 
