@@ -8,7 +8,8 @@ var TEMPLATE_DIR =  __dirname + '/template/'
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/template");
-	app.use('/css', express.static(path.join(__dirname, 'public/css')));
+	//app.use('/css', express.static(path.join(__dirname, 'public/css')));
+	app.use(express.static(path.join(__dirname, 'public')));
 	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
