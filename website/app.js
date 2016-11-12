@@ -20,6 +20,8 @@ var average_fear;
 var average_joy;
 var average_sadness;
 
+var globalName;
+
 // trashy way of handling asynch issues
 var counter = 0;
 var myQuery;
@@ -97,8 +99,7 @@ function processNews(query, res) {
       average_anger = 0;
       counter = 0;
       for (var i = 0; i < maxDocs; i++) {
-        //var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
-        console.log(s);
+        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         average_sentiment += s;
         // update global average values
         analyzeTone(news.result.docs[i].source.enriched.url.text, res);
@@ -144,7 +145,7 @@ function finalCalc(res) {
             return;
           }
           console.log('rendered');
-            var renderedHtml = ejs.render(content, {sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            var renderedHtml = ejs.render(content, {name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
             //get redered HTML code
             res.end(renderedHtml);
   });
@@ -176,7 +177,7 @@ app.get('/description',
 
     function(req, res) {
 
-        console.log(req.form.name);
+        globalName = req.form.name;
 
         app.set('views', __dirname + "/public/template");
         console.log('Base name:' + __dirname);
