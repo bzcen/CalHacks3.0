@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var request = require('superagent');
 var path = require('path');
+var ejs = require('ejs');
 var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
@@ -11,8 +12,7 @@ var https = require('https');
 var field = form.field;
 app.use(bodyParser());
 
-// maximum number of presented data
-var maxDocs = 5;
+
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
@@ -67,6 +67,12 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
+app.get('/description', function(req, res) {
+    app.set('views', __dirname + "/public/template");
+    console.log('Base name:' + __dirname);
+    res.sendFile(TEMPLATE_DIR + 'description.html');
+});
+
 var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
 
 app.get('/test', function(req, res, next) {
@@ -87,6 +93,12 @@ app.get('/payment', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'payment.html');
 });
 
+app.post('/process-card', function(req, res) {
+  var nonce = req.body.nonce
+  res.send(nonce);
+})
+
+
 app.get('/searchforms',
   form(
     field('searchItem').trim()
@@ -96,9 +108,55 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    processNews(maxDocs, search);
+    //processNews(maxDocs, search);
+    // look for all the fittings here
+    var re = /\0/g;
 
-    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
+	fs.readFile('./data.json', 'utf8', function (err, data) {
+		if (err) throw err; // we'll not consider error handling for now
+		var obj = JSON.parse(data.replace(re, ""));
+
+        var search = req.form.searchItem;
+        var match = false;
+
+        console.log("TERM: " + search);
+
+        console.log("OBJ: " + obj.id);
+
+        for(var i = 0; i < obj.id; i++) {
+            if (obj.name == search)
+            {
+                match = true;
+                fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
+                    if (err) {
+                      console.log(err);
+                      res.end("ASDF");
+                      return;
+                    }
+
+                    console.log("TERM: " + search);
+                    console.log(obj);
+
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc});  //get redered HTML code
+                    res.end(renderedHtml);
+                });
+                return;
+            }
+        }
+
+        var search = "";
+        fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
+            if (err) {
+              console.log(err);
+              res.end("ASDF");
+              return;
+            }
+
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A"});  //get redered HTML code
+            res.end(renderedHtml);
+        });
+    });
+    //res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
 

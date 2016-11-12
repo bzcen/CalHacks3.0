@@ -7,27 +7,28 @@
 	<body>
         <div class="jumbotron text-center">
         	<div id="titleText">
-                <h1>Red Cross</h1>
+                <h1>Search Query: <%= name %></h1>
             </div>
         </div>
 
-		<div class="container">
-		  <!-- Example row of columns -->
-		  <div class="row">
-			<div class="col-md-6">
-			  <h2>Description</h2>
-			  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-			  <h3>Similar Charities</h3>
-			  <button type="button" class="btn btn-success">Donate Now</button>
-		   </div>
-			<div class="col-md-6">
-			  <h2>Sentiment Score</h2>
-			  <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-			  <h3>Keyword Analysis</h3>
-			  <h3>Tone Analysis</h3>
+		<form action="searchforms">
+            <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
+			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
+            </div>
+		</form>
 
-			</div>
-		  </div>
+	    <div class="col-md-13" style="margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;">
+             <!--First review-->
+             <div class="media">
+                 <a class="media-left waves-light">
+                     <img class="rounded-circle" src="https://pbs.twimg.com/profile_images/           723592437495685120/0EHwBNff.jpg" alt="Generic placeholder image" style="width: 90px; height: 90px;">
+                 </a>
+                 <div class="media-body">
+                     <a href="./description"><h4 class="media-heading"> <%= name %></h4></a>
+                     <p> <%= desc %> </p>
+                 </div>
+             </div>
+         </div>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
@@ -35,5 +36,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.js"></script>
+		<script src="controllers/controller.js"></script>
+
 	</body>
 </html>
