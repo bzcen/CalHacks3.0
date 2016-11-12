@@ -193,14 +193,13 @@ app.get('/searchforms',
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
                     if (err) {
                       console.log(err);
-                      res.end("ASDF");
+                      res.end("Error: Check Server command logs");
                       return;
                     }
 
-                    console.log("TERM: " + search);
                     console.log(obj);
 
-                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc});  //get redered HTML code
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img});  //get redered HTML code
                     res.end(renderedHtml);
                 });
                 return;

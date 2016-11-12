@@ -3,32 +3,35 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
+		<link href="/css/button.css" rel="stylesheet">
 	</head>	
-	<body>
-        <div class="jumbotron text-center">
-        	<div id="titleText">
+	<body style="background-color: #001f3f">
+        <div id="searchtile" class="jumbotron text-center">
+        	<div style="color: #001f3f; filter: brightness(0%); " id="titleText">
                 <h1>Search Query: <%= name %></h1>
             </div>
         </div>
 
-		<form action="searchforms">
-            <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
-			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
-            </div>
-		</form>
+        <div class="container">
+            <form action="searchforms">
+                <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
+                    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
+                </div>
+            </form>
 
-	    <div class="col-md-13" style="margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;">
-             <!--First review-->
-             <div class="media">
-                 <a class="media-left waves-light">
-                     <img class="rounded-circle" src="https://pbs.twimg.com/profile_images/           723592437495685120/0EHwBNff.jpg" alt="Generic placeholder image" style="width: 90px; height: 90px;">
-                 </a>
-                 <div class="media-body">
-                     <a href="./description"><h4 class="media-heading"> <%= name %></h4></a>
-                     <p> <%= desc %> </p>
+            <div class="col-md-13" style="margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;">
+                 <!--First review-->
+                 <div class="media">
+                     <a class="media-left waves-light">
+                         <img src= <%= img %> class="rounded-circle" alt="Generic placeholder image" style="width: 90px; height: 90px;">
+                     </a>
+                     <div class="media-body">
+                         <a href="./description"><h4 style="color: white" class="media-heading"> <%= name %></h4></a>
+                         <p style="color: white"> <%= desc %> </p>
+                     </div>
                  </div>
              </div>
-         </div>
+        </div>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
