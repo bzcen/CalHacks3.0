@@ -11,7 +11,8 @@ var https = require('https');
 var field = form.field;
 app.use(bodyParser());
 
-
+// maximum number of presented data
+var maxDocs = 5;
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
@@ -54,14 +55,15 @@ app.get('/searchforms',
   ),
 
   function(req, res){
-    console.log(req.form.searchItem);
+    var search = req.form.searchItem;
+    console.log(search);
 
     // create a new Alchemy News query using search term
     var params = {
   		start: 'now-1d',
   		end: 'now',
-  		count: 2,
-  		'q.enriched.url.title': req.form.searchItem,
+  		count: maxDocs,
+  		'q.enriched.url.title': search,
   		return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
 	};
     alchemy_data_news.getNews(params, function (err, news) {
@@ -70,6 +72,18 @@ app.get('/searchforms',
   	else
   		// returns news
     	console.log(JSON.stringify(news, null, 2));
+
+      var average_sentiment = 0;
+
+      for (var i = 0; i < maxDocs; i++) {
+        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        console.log(s);
+        average_sentiment += s;
+      }
+
+      average_sentiment /= maxDocs;
+      console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
+      console.log(average_sentiment);
 	});
 
     res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
