@@ -241,7 +241,7 @@ app.get('/searchforms',
         console.log("OBJ: " + obj.id);
 
         for(var i = 0; i < obj.id; i++) {
-            if (obj.name == search)
+            if (obj.values[i].name == search)
             {
                 match = true;
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
@@ -254,7 +254,7 @@ app.get('/searchforms',
                     console.log(search);
                     var linktext = "./description?name=" + encodeURIComponent(search);
                     console.log(linktext);
-                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img, link: linktext});  //get redered HTML code
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img, link: linktext});  //get redered HTML code
                     res.end(renderedHtml);
                 });
                 return;
