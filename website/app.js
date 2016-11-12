@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var request = require('superagent');
 var path = require('path');
+var ejs = require('ejs');
 var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
@@ -18,6 +19,38 @@ var alchemy_data_news = new AlchemyDataNewsV1({
   api_key: '6896e3e3058a27db83a2ba7773c742f272d6451d'
 });
 
+function processNews(numDocs, query) {
+
+  // create a new Alchemy News query using search term
+  var params = {
+      start: 'now-1d',
+      end: 'now',
+      count: numDocs,
+      'q.enriched.url.title': query,
+      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
+  };
+
+  alchemy_data_news.getNews(params, function (err, news) {
+    if (err)
+      console.log('error:', err);
+    else
+      // returns news
+      console.log(JSON.stringify(news, null, 2));
+
+      var average_sentiment = 0;
+
+      for (var i = 0; i < maxDocs; i++) {
+        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        console.log(s);
+        average_sentiment += s;
+      }
+
+      average_sentiment /= maxDocs;
+      console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
+      console.log(average_sentiment);
+  });
+}
+
 var options = {
   host: 'datapiece.bluemix.net',
   port: 443,
@@ -32,6 +65,12 @@ app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
 	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
+});
+
+app.get('/description', function(req, res) {
+    app.set('views', __dirname + "/public/template");
+    console.log('Base name:' + __dirname);
+    res.sendFile(TEMPLATE_DIR + 'description.html');
 });
 
 var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
@@ -66,25 +105,55 @@ app.get('/searchforms',
   ),
 
   function(req, res){
-    console.log(req.form.searchItem);
+    // look for all the fittings here
+    var re = /\0/g;
 
-    // create a new Alchemy News query using search term
-    var params = {
-  		start: 'now-1d',
-  		end: 'now',
-  		count: 2,
-  		'q.enriched.url.title': req.form.searchItem,
-  		return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
-	};
-    alchemy_data_news.getNews(params, function (err, news) {
-  	if (err)
-    	console.log('error:', err);
-  	else
-  		// returns news
-    	console.log(JSON.stringify(news, null, 2));
-	});
+	fs.readFile('./data.json', 'utf8', function (err, data) {
+		if (err) throw err; // we'll not consider error handling for now
+		var obj = JSON.parse(data.replace(re, ""));
 
-    res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
+        var search = req.form.searchItem;
+        var match = false;
+
+        console.log("TERM: " + search);
+
+        console.log("OBJ: " + obj.id);
+
+        for(var i = 0; i < obj.id; i++) {
+            if (obj.name == search)
+            {
+                match = true;
+                fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
+                    if (err) {
+                      console.log(err);
+                      res.end("ASDF");
+                      return;
+                    }
+
+                    console.log("TERM: " + search);
+                    console.log(obj);
+
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc});  //get redered HTML code
+                    res.end(renderedHtml);
+                });
+                return;
+            }
+        }
+
+        var search = "";
+        fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
+            if (err) {
+              console.log(err);
+              res.end("ASDF");
+              return;
+            }
+
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A"});  //get redered HTML code
+            res.end(renderedHtml);
+        });
+    });
+
+    //res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
 
@@ -95,6 +164,8 @@ var marchantData = {
   "amount": 0.01,
   "description": "string"
 }
+
+
 
 function buyCapitalOne(account, amount) {
     request.post('http://api.reimaginebanking.com/accounts/' + account + '/purchases?key=96369a6506e9cc642c1ed4e633081c82')
