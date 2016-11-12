@@ -125,7 +125,7 @@ function finalCalc(res) {
   average_anger /= maxDocs;
   average_anger = average_anger.toFixed(2);
   average_disgust /= maxDocs;
-  average_disgust /= average_digust.toFixed(2);
+  average_disgust /= average_disgust.toFixed(2);
 
   console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');
   console.log(average_sentiment);
