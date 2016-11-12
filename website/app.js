@@ -12,20 +12,22 @@ var https = require('https');
 var field = form.field;
 app.use(bodyParser());
 
-
+var maxDocs = 2;
+var startTime = 'now-12h';
+var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
-  api_key: '6896e3e3058a27db83a2ba7773c742f272d6451d'
+  api_key: 'cb873efd5b3a458bfaf914ec040c1e490d61c92a'
 });
 
-function processNews(numDocs, query) {
+function processNews(query) {
 
   // create a new Alchemy News query using search term
   var params = {
-      start: 'now-1d',
-      end: 'now',
-      count: numDocs,
+      start: startTime,
+      end: endTime,
+      count: maxDocs,
       'q.enriched.url.title': query,
       return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment,enriched.url.keywords'
   };
@@ -108,7 +110,7 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    //processNews(maxDocs, search);
+    processNews(search);
     // look for all the fittings here
     var re = /\0/g;
 
