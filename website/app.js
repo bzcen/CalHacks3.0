@@ -67,6 +67,12 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
+app.get('/description', function(req, res) {
+    app.set('views', __dirname + "/public/template");
+    console.log('Base name:' + __dirname);
+    res.sendFile(TEMPLATE_DIR + 'description.html');
+});
+
 var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
 
 app.get('/test', function(req, res, next) {
