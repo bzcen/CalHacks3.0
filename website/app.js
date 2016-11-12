@@ -143,13 +143,22 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-app.get('/description', function(req, res) {
-    app.set('views', __dirname + "/public/template");
-    console.log('Base name:' + __dirname);
+app.get('/description', 
+    
+    form(
+        field('name').trim()
+    ),
 
-        processNews(search);
+    function(req, res) {
 
-    res.sendFile(TEMPLATE_DIR + 'description.html');
+        console.log(req.form.name);
+
+        app.set('views', __dirname + "/public/template");
+        console.log('Base name:' + __dirname);
+
+        processNews(req.form.name);
+
+        res.sendFile(TEMPLATE_DIR + 'description.html');
 });
 
 var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
@@ -213,9 +222,10 @@ app.get('/searchforms',
                       return;
                     }
 
-                    console.log(obj);
-
-                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img});  //get redered HTML code
+                    console.log(search);
+                    var linktext = "./description?name=" + encodeURIComponent(search);
+                    console.log(linktext);
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img, link: linktext});  //get redered HTML code
                     res.end(renderedHtml);
                 });
                 return;
