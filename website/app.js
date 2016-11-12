@@ -123,6 +123,7 @@ var options = {
 var TEMPLATE_DIR =  __dirname + '/public/template/'
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/partials", express.static(__dirname+"/template/partials"));
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
@@ -136,12 +137,12 @@ app.get('/description', function(req, res) {
     res.sendFile(TEMPLATE_DIR + 'description.html');
 });
 
-var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
+var resultElement = fs.readFileSync("public/template/partials/result_element.html", "utf8");
 
 app.get('/test', function(req, res, next) {
 	//var html = fs.readFileSync("public/template/result_element.html", "utf8");
 	//res.send(html);
-	res.sendFile(TEMPLATE_DIR + 'result_element.html');
+	res.sendFile(TEMPLATE_DIR + 'partials/result_element.html');
 });
 //var resultElement = fs.readFileSync("template/result_element.html", "utf8");
 
@@ -222,6 +223,15 @@ app.get('/searchforms',
     //res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
+app.all("/*", function(req, res, next) {
+	res.sendFile("index.html", {root: __dirame + "/template"});
+});
+
+app.use(app.router);
+app.get('/', routes.index);
+app.get('template/partials/:name', routes.partials);
+app.get('*', routes.index);
+
 
 var marchantData = {
   "merchant_id": "string",

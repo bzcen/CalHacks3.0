@@ -3,8 +3,47 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
+
+		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
+		    authDomain: "charitystatement.firebaseapp.com",
+		    databaseURL: "https://charitystatement.firebaseio.com",
+		    storageBucket: "charitystatement.appspot.com",
+		    messagingSenderId: "693936859765"
+		  };
+		  firebase.initializeApp(config);
+		  console.log("firebase loaded.. theoreticallyy")
+		</script>
+		<script>
+		var uiConfig = {
+        'signInSuccessUrl': '/',
+        'signInOptions': [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        'tosUrl': '/#',
+      };
+      	var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      	ui.start('#firebaseui-auth-container', uiConfig);
+      </script>
+
 	</head>	
 	<body>
+
+		<div id="firebaseui-auth-container"></div>
+
         <div class="jumbotron text-center">
         	<div id="titleText">
                 <h1>Charity Statement</h1>
@@ -13,7 +52,7 @@
 
 		<form action="searchforms">
             <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
-			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
+			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem"/>
             </div>
 		</form>
 
@@ -22,14 +61,15 @@
 				Add Element Test
 			</button>
 			<div id="#results">
-				<!--<div ng-include='/template/result_element.html'></div>-->
 				<div ng-bind-html="htmlToAdd"></div>
-				<div ng-include='template/result_element.html'> </div>
-				<div ng-include="result_element.html"> </div>
 			</div>
+			<br>
+			<button type="button" class="btn btn-default" ng-click="makeDonation()"> 
+				{{"Donate to: " + charityname}}
+			</button>
 		</div>
 
-		<a href="/test"> Test </a>
+		<a style="margin-left: 30px" href="/payment"> Test </a>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
