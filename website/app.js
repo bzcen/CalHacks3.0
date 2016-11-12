@@ -19,6 +19,10 @@ var average_fear;
 var average_joy;
 var average_sadness;
 
+// trashy way of handling asynch issues
+var counter = 0;
+var myQuery;
+
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
@@ -34,9 +38,9 @@ function analyzeTone(paragraph) {
   };
 
   toneAnalyzer.tone(params, function (err, analysis) {
-    if (err)
+    if (err) {
       console.log('error:', err);
-    else
+    } else {
       console.log(JSON.stringify(analysis, null, 2));
       var tones = analysis.document_tone.tone_categories[0].tones;
       average_anger += tones[0].score;
@@ -44,9 +48,15 @@ function analyzeTone(paragraph) {
       average_fear += tones[2].score;
       average_joy += tones[3].score;
       average_sadness += tones[4].score;
+      counter += 1;
+      // once all asynch calls are done, call final output calculation function
+      if (counter => maxDocs) {
+        finalCalc();
+      }
+    }
+
   });
 }
-
 
 var maxDocs = 2;
 var startTime = 'now-12h';
@@ -59,6 +69,7 @@ var alchemy_data_news = new AlchemyDataNewsV1({
 
 function processNews(query) {
 
+  myQuery = query;
   // create a new Alchemy News query using search term
   var params = {
       start: startTime,
@@ -81,7 +92,7 @@ function processNews(query) {
       average_fear = 0;
       average_disgust = 0;
       average_anger = 0;
-
+      counter = 0;
       for (var i = 0; i < maxDocs; i++) {
         var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         console.log(s);
@@ -89,28 +100,30 @@ function processNews(query) {
         // update global average values
         analyzeTone(news.result.docs[i].source.enriched.url.text);
       }
-
-      // FINAL AVERAGE VALUES
-      average_sentiment /= maxDocs;
-      average_joy /= maxDocs;
-      average_sadness /= maxDocs;
-      average_fear /= maxDocs;
-      average_anger /= maxDocs;
-      average_disgust /= maxDocs;
-
-      console.log('AVERAGE SENTIMENT OF ' + query + ' IS...');
-      console.log(average_sentiment);
-      console.log('AVERAGE JOY OF TEXT IS...');
-      console.log(average_joy);
-      console.log('AVERAGE SADNESS OF TEXT IS...');
-      console.log(average_sadness);
-      console.log('AVERAGE FEAR OF TEXT IS...');
-      console.log(average_fear);
-      console.log('AVERAGE DISGUST OF TEXT IS...');
-      console.log(average_disgust);
-      console.log('AVERAGE ANGER OF TEXT IS...');
-      console.log(average_joy);      
   });
+}
+
+function finalCalc() {
+  // FINAL AVERAGE VALUES
+  average_sentiment /= maxDocs;
+  average_joy /= maxDocs;
+  average_sadness /= maxDocs;
+  average_fear /= maxDocs;
+  average_anger /= maxDocs;
+  average_disgust /= maxDocs;
+
+  console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');
+  console.log(average_sentiment);
+  console.log('AVERAGE JOY OF TEXT IS...');
+  console.log(average_joy);
+  console.log('AVERAGE SADNESS OF TEXT IS...');
+  console.log(average_sadness);
+  console.log('AVERAGE FEAR OF TEXT IS...');
+  console.log(average_fear);
+  console.log('AVERAGE DISGUST OF TEXT IS...');
+  console.log(average_disgust);
+  console.log('AVERAGE ANGER OF TEXT IS...');
+  console.log(average_joy); 
 }
 
 
@@ -131,10 +144,22 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-app.get('/description', function(req, res) {
-    app.set('views', __dirname + "/public/template");
-    console.log('Base name:' + __dirname);
-    res.sendFile(TEMPLATE_DIR + 'description.html');
+app.get('/description', 
+    
+    form(
+        field('name').trim()
+    ),
+
+    function(req, res) {
+
+        console.log(req.form.name);
+
+        app.set('views', __dirname + "/public/template");
+        console.log('Base name:' + __dirname);
+
+        processNews(req.form.name);
+
+        res.sendFile(TEMPLATE_DIR + 'description.html');
 });
 
 var resultElement = fs.readFileSync("public/template/partials/result_element.html", "utf8");
@@ -172,7 +197,7 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    processNews(search);
+
     // look for all the fittings here
     var re = /\0/g;
 
@@ -194,14 +219,14 @@ app.get('/searchforms',
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
                     if (err) {
                       console.log(err);
-                      res.end("ASDF");
+                      res.end("Error: Check Server command logs");
                       return;
                     }
 
-                    console.log("TERM: " + search);
-                    console.log(obj);
-
-                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc});  //get redered HTML code
+                    console.log(search);
+                    var linktext = "./description?name=" + encodeURIComponent(search);
+                    console.log(linktext);
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img, link: linktext});  //get redered HTML code
                     res.end(renderedHtml);
                 });
                 return;

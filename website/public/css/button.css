@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Pacifico';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Pacifico'), url('http://themes.googleusercontent.com/font?kit=fKnfV28XkldRW297cFLeqfesZW2xOQ-xsNqO47m55DA') format('truetype');
+}
+
+#button {
+    font-size: 450%;
+    font-family: 'Pacifico', Arial, sans-serif;
+}
+
+#searchtile {
+    background-image: url("https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg");
+    filter: brightness(50%);
+}
+
+#bgcity {
+    background-image: url("https://andygu.me/files/citybg.png");
+}
+

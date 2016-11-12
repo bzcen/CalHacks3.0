@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
+<<<<<<< HEAD
 
 		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
@@ -47,9 +48,20 @@
         <div class="jumbotron text-center">
         	<div id="titleText">
                 <h1>Charity Statement</h1>
+        <link href="/css/button.css" rel="stylesheet">
+	</head>	
+	<body style="background-color: #001f3f">
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div class="jumbotron" style="background-color: #001f3f">
+        	<div id="titleText" style="text-align: center">
+                <h1 id="button" style="color: #ffffff">Donation Tracker</h1>
             </div>
         </div>
 
+        <br></br>
 		<form action="searchforms">
             <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
 			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem"/>
@@ -70,6 +82,10 @@
 		</div>
 
 		<a style="margin-left: 30px" href="/payment"> Test </a>
+            <div style="margin-left: 140px; margin-right: 140px" class="form-group row">
+			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
+            </div>
+		</form>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
@@ -79,10 +95,5 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.js"></script>
 		<script src="controllers/controller.js"></script>
 
-		<script>
-		var addAndy = function() {
-			console.log("add element");
-		};
-		</script>
 	</body>
 </html>
