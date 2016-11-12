@@ -8,6 +8,7 @@ var fs = require('fs');
 var form = require('express-form');
 var bodyParser = require('body-parser');
 var https = require('https');
+var unirest = require('unirest');
 
 var field = form.field;
 app.use(bodyParser());
@@ -96,7 +97,7 @@ function processNews(query, res) {
       average_anger = 0;
       counter = 0;
       for (var i = 0; i < maxDocs; i++) {
-        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        //var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         console.log(s);
         average_sentiment += s;
         // update global average values
@@ -159,6 +160,7 @@ var options = {
 var TEMPLATE_DIR =  __dirname + '/public/template/'
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/partials", express.static(__dirname+"/template/partials"));
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
@@ -166,8 +168,8 @@ app.get('/', function(req, res) {
 	res.sendFile(TEMPLATE_DIR + 'index.html');
 });
 
-app.get('/description', 
-    
+app.get('/description',
+
     form(
         field('name').trim()
     ),
@@ -185,12 +187,12 @@ app.get('/description',
 
 });
 
-var resultElement = fs.readFileSync("public/template/result_element.html", "utf8");
+var resultElement = fs.readFileSync("public/template/partials/result_element.html", "utf8");
 
 app.get('/test', function(req, res, next) {
 	//var html = fs.readFileSync("public/template/result_element.html", "utf8");
 	//res.send(html);
-	res.sendFile(TEMPLATE_DIR + 'result_element.html');
+	res.sendFile(TEMPLATE_DIR + 'partials/result_element.html');
 });
 //var resultElement = fs.readFileSync("template/result_element.html", "utf8");
 
@@ -206,8 +208,36 @@ app.get('/payment', function(req, res) {
 });
 
 app.post('/process-card', function(req, res) {
-  var nonce = req.body.nonce
-  res.send(nonce);
+  var card_nonce = req.body.nonce
+
+  var access_token = 'sandbox-sq0atb-qnEQHbUhWZ-OwIUzOleOCg'
+
+  var location_id = unirest.get('https://connect.squareup.com/v2/locations', headers= {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ' + access_token
+  })
+
+  // var donation = req.body.donation
+
+  var response = unirest.post('https://connect.squareup.com/v2/locations/' + location_id + '/transactions',
+    headers={
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + access_token,
+    },
+    params = JSON.stringify({
+      'card_nonce': card_nonce,
+      'amount_money': {
+        // 'amount': donation,
+        'amount': 100,
+        'currency': 'USD'
+      }
+      // 'idempotency_key': str(uuid.uuid1())
+    })
+  )
+
+  res.sendFile(TEMPLATE_DIR + 'thank_you.html');
+
 })
 
 
@@ -236,7 +266,7 @@ app.get('/searchforms',
         console.log("OBJ: " + obj.id);
 
         for(var i = 0; i < obj.id; i++) {
-            if (obj.name == search)
+            if (obj.values[i].name == search)
             {
                 match = true;
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
@@ -249,7 +279,7 @@ app.get('/searchforms',
                     console.log(search);
                     var linktext = "./description?name=" + encodeURIComponent(search);
                     console.log(linktext);
-                    var renderedHtml = ejs.render(content, {name : search, desc : obj.desc, img : obj.img, link: linktext});  //get redered HTML code
+                    var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img, link: linktext});  //get redered HTML code
                     res.end(renderedHtml);
                 });
                 return;
@@ -264,13 +294,14 @@ app.get('/searchforms',
               return;
             }
 
-            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A"});  //get redered HTML code
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A", img : "", link: ""});  //get redered HTML code
             res.end(renderedHtml);
         });
     });
     //res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
 );
+
 
 var marchantData = {
   "merchant_id": "string",
