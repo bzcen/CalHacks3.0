@@ -12,6 +12,13 @@ var https = require('https');
 var field = form.field;
 app.use(bodyParser());
 
+var average_sentiment;
+var average_anger;
+var average_disgust;
+var average_fear;
+var average_joy;
+var average_sadness;
+
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
@@ -21,7 +28,9 @@ var toneAnalyzer = new ToneAnalyzerV3({
 
 function analyzeTone(paragraph) {
   var params = {
-    text: paragraph
+    text: paragraph,
+    tones: 'emotion',
+    sentences: false
   };
 
   toneAnalyzer.tone(params, function (err, analysis) {
@@ -29,6 +38,12 @@ function analyzeTone(paragraph) {
       console.log('error:', err);
     else
       console.log(JSON.stringify(analysis, null, 2));
+      var tones = analysis.document_tone.tone_categories[0].tones;
+      average_anger += tones[0].score;
+      average_disgust += tones[1].score;
+      average_fear += tones[2].score;
+      average_joy += tones[3].score;
+      average_sadness += tones[4].score;
   });
 }
 
@@ -60,20 +75,41 @@ function processNews(query) {
       // returns news
       console.log(JSON.stringify(news, null, 2));
 
-      var average_sentiment = 0;
+      average_sentiment = 0;
+      average_sadness = 0;
+      average_joy = 0;
+      average_fear = 0;
+      average_disgust = 0;
+      average_anger = 0;
 
       for (var i = 0; i < maxDocs; i++) {
         var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         console.log(s);
         average_sentiment += s;
-        console.log('TONE ANALYSIS OF THE INITIAL TEXT');
-        console.log(analyzeTone(news.result.docs[i].source.enriched.url.text));
+        // update global average values
+        analyzeTone(news.result.docs[i].source.enriched.url.text);
       }
 
-      // FINAL AVERAGE SENTIMENT VALUE
+      // FINAL AVERAGE VALUES
       average_sentiment /= maxDocs;
+      average_joy /= maxDocs;
+      average_sadness /= maxDocs;
+      average_fear /= maxDocs;
+      average_anger /= maxDocs;
+      average_disgust /= maxDocs;
+
       console.log('AVERAGE SENTIMENT OF ' + query + ' IS...');
       console.log(average_sentiment);
+      console.log('AVERAGE JOY OF TEXT IS...');
+      console.log(average_joy);
+      console.log('AVERAGE SADNESS OF TEXT IS...');
+      console.log(average_sadness);
+      console.log('AVERAGE FEAR OF TEXT IS...');
+      console.log(average_fear);
+      console.log('AVERAGE DISGUST OF TEXT IS...');
+      console.log(average_disgust);
+      console.log('AVERAGE ANGER OF TEXT IS...');
+      console.log(average_joy);      
   });
 }
 
