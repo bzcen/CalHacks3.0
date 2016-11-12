@@ -95,7 +95,7 @@ function processNews(query) {
       average_anger = 0;
       counter = 0;
       for (var i = 0; i < maxDocs; i++) {
-        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        //var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         console.log(s);
         average_sentiment += s;
         // update global average values
@@ -269,7 +269,7 @@ app.get('/searchforms',
               return;
             }
 
-            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A"});  //get redered HTML code
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A", img : "", link: ""});  //get redered HTML code
             res.end(renderedHtml);
         });
     });
