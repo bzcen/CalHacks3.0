@@ -278,7 +278,7 @@ app.get('/searchforms',
         console.log("OBJ: " + obj.id);
 
         for(var i = 0; i < obj.id; i++) {
-            if (obj.values[i].name == search)
+            if (obj.values[i].name.toLowerCase() == search.toLowerCase())
             {
                 match = true;
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
