@@ -58,7 +58,7 @@
 
           // Delete this line and uncomment the lines below when you're ready
           // to start submitting nonces to your server.
-          alert('Nonce received: ' + nonce);
+          // alert('Nonce received: ' + nonce);
 
 
           /*
@@ -70,14 +70,15 @@
             at the bottom of this sample, to correspond to the URL you want to
             submit the nonce to.
           */
-          // document.getElementById('card-nonce').value = nonce;
-          // document.getElementById('nonce-form').submit();
+          document.getElementById('card-nonce').value = nonce;
+          document.getElementById('nonce-form').submit();
 
         }
       },
 
       unsupportedBrowserDetected: function() {
         // Fill in this callback to alert buyers when their browser is not supported.
+        alert("Your browser is not supported")
       },
 
       // Fill in these cases to respond to various events that can occur while a
@@ -170,7 +171,7 @@
     You should replace the action attribute of the form with the path of
     the URL you want to POST the nonce to (for example, "/process-card")
   -->
-  <form id="nonce-form" novalidate action="REPLACE_ME" method="post">
+  <form id="nonce-form" novalidate action="/process-card" method="post">
 
     <!--
       Whenever a nonce is generated, it's assigned as the value of this hidden
