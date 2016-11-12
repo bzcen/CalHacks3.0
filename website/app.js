@@ -2,6 +2,7 @@ var http = require('http');
 //var html = require('html');
 var express = require('express');
 var app = express();
+var request = require('superagent');
 var path = require('path');
 var jsdom = require('jsdom');
 var fs = require('fs');
@@ -57,6 +58,21 @@ app.get('/searchforms',
   }
 );
 
+var marchantData = {
+  "merchant_id": "string",
+  "medium": "balance",
+  "purchase_date": "2016-11-12",
+  "amount": 0.01,
+  "description": "string"
+}
+
+function buyCapitalOne(account, amount) {
+    request.post('http://api.reimaginebanking.com/accounts/' + account + '/purchases?key=96369a6506e9cc642c1ed4e633081c82')
+	.send(merchantData)
+	.end(function(err, res){
+		//idfk, do something if you buy something
+    });
+});
 
 // request at bluemix instance
 
