@@ -1,22 +1,16 @@
 var charityStatement = angular.module('charityStatement', ['ngSanitize']);
 
-var blankHtml = "<img src=\"https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-1/c56.0.160.160/p160x160/13103482_10207680619286730_8033174344227124466_n.jpg?oh=054453aeaad7666f6273d51bcd0015cb&oe=58D300C7\"/><p>Andy is lame</p><div id=\"score\">5/7</div>"
+var blankHtml = "<div class=\"col-md-12\" style=\"margin-top: 5px; margin-bottom: 5px;\"><div class=\"media\"><a class=\"media-left waves-light\"></a><div class=\"media-body\"><h4 class=\"media-heading\">John Doe</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate temporibus iure soluta. Quasi mollitia maxime nemo quam accusamus possimus, voluptatum expedita assumenda. Earum sit id ullam eum vel delectus!</p></div></div></div>"
 
 charityStatement.controller('CharityCtrl', ['$scope', '$http', '$sce', '$templateCache',
 						 function($scope, $http, $sce, $templateCache) {
-    console.log("Controller functional");
 
     $scope.addAndy = function() {
+        console.log("Add Element called");
     	var element = angular.element(document.querySelector("#results"));
-    	element.append('hi<br/>');
-
-        var template = blankHtml;
-    	console.log(template);
-    	console.log("cwd: " + $scope);
-
-    	$scope.htmlToAdd += $scope;
-
-    	$scope.htmlToAdd = 'hi<br>';
-    	$scope.htmlToAdd += template;
+    	element.append('<br/>');
+        //$scope.htmlToAdd += $scope;
+        $scope.htmlToAdd += '<br>';
+    	$scope.htmlToAdd += blankHtml;
     }
 }]);

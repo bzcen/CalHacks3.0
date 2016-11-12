@@ -49,7 +49,13 @@ app.get('/index', function(req, res) {
 	res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
 });*/
 
-app.get('/searchforms', 
+app.get('/payment', function(req, res) {
+	//var html = fs.readFileSync("public/template/result_element.html", "utf8");
+	//res.send(html);
+	res.sendFile(TEMPLATE_DIR + 'payment.html');
+});
+
+app.get('/searchforms',
   form(
     field('searchItem').trim()
   ),
