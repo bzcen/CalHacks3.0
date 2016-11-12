@@ -9,7 +9,6 @@ var form = require('express-form');
 var bodyParser = require('body-parser');
 var https = require('https');
 var unirest = require('unirest');
-var json = require ('json');
 
 var field = form.field;
 app.use(bodyParser());
