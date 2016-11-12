@@ -5,24 +5,18 @@
 		<link href="/css/custom.css" rel="stylesheet">
 	</head>	
 	<body>
-		<h1> Charity Sentiment </h1>
+        <div class="jumbotron text-center">
+                <h1 style="textalign: center;">Charity Statement</h1>
+        </div>
+
 		<form action="search">
-			<input type="text" name="searchItem"/>
-			<input type="submit" value="Submit" />
+            <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
+			    <input type="text" class="form-control" placeholder="input a charity" name="searchItem"/>
+            </div>
 		</form>
 
 		<div id="#results">
 		</div>
-
-		<div id="#donations">
-			<form action="donate">
-				<textarea rows="1" cols="20"> </textarea>
-				<textarea rows="1" cols="20"> </textarea>
-				<textarea rows="20" cols="20"> </textarea>
-				<input type="submit" value="Submit">
-			</form>
-		</div>
-
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
