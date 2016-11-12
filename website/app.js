@@ -27,7 +27,7 @@ function processNews(numDocs, query) {
       end: 'now',
       count: numDocs,
       'q.enriched.url.title': query,
-      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment'
+      return: 'enriched.url.title,enriched.url.enrichedTitle.docSentiment,enriched.url.keywords'
   };
 
   alchemy_data_news.getNews(params, function (err, news) {
@@ -46,7 +46,7 @@ function processNews(numDocs, query) {
       }
 
       average_sentiment /= maxDocs;
-      console.log('AVERAGE SENTIMENT OF ' + search + ' IS...');
+      console.log('AVERAGE SENTIMENT OF ' + query + ' IS...');
       console.log(average_sentiment);
   });
 }
@@ -96,7 +96,7 @@ app.get('/searchforms',
     var search = req.form.searchItem;
     console.log(search);
 
-    // processNews(maxDocs, search);
+    processNews(maxDocs, search);
 
     res.sendFile(path.join(TEMPLATE_DIR + 'index.html'));
   }
