@@ -193,6 +193,8 @@ app.post('/process-card', function(req, res) {
     'Authorization': 'Bearer ' + access_token
   })
 
+  // var donation = req.body.donation
+
   var response = unirest.post('https://connect.squareup.com/v2/locations/' + location_id + '/transactions',
     headers={
       'Accept': 'application/json',
@@ -202,6 +204,7 @@ app.post('/process-card', function(req, res) {
     params = JSON.stringify({
       'card_nonce': card_nonce,
       'amount_money': {
+        // 'amount': donation,
         'amount': 100,
         'currency': 'USD'
       }
