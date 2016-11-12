@@ -7,7 +7,9 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-form": "^0.12.6",
-    "jsdom": "^9.8.3"
+    "jsdom": "^9.8.3",
+    "require-from-string": "^1.2.1",
+    "superagent": "^2.3.0"
   },
   "devDependencies": {},
   "scripts": {
