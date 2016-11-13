@@ -1,9 +1,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Sample Payment Form</title>
+  <title>Payment Form</title>
   <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
   </script>
+  <head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+		<link href="/css/custom.css" rel="stylesheet">
+		<link href="/css/button.css" rel="stylesheet">
+	</head>
   <script>
 
   var applicationId = 'sandbox-sq0idp-tkpyri8wNczhTPFLVu9PQQ'; // <-- Add your application's ID here
@@ -21,7 +26,12 @@
     inputClass: 'sq-input',
     inputStyles: [
       {
-        fontSize: '15px'
+        fontSize: '20px'
+        // color: 'red'
+        // padding: '10px'
+      },
+      {
+        padding: '5px',
       }
     ],
     cardNumber: {
@@ -162,6 +172,12 @@
   <div id="sq-expiration-date"></div>
   <label>Postal Code</label>
   <div id="sq-postal-code"></div>
+  <!-- <div class="jumbotron" style="background-color: #001f3f"> -->
+    <div id="titleText" style="text-align: center">
+          <h1 id="button" style="color: #001f3f">Donation Amount</h1>
+      </div>
+  <!-- </div> -->
+  <div style="text-align:center;"><input type="text" name = "donation-amount" placeholder="$1"></div>
 
 
   <!--
@@ -178,12 +194,13 @@
       input field.
     -->
     <input type="hidden" id="card-nonce" name="nonce">
+    <input type="hidden" id="donation-amount" name="donation">
 
     <!--
       Clicking this Submit button kicks off the process to generate a card nonce
       from the buyer's card information.
     -->
-    <input type="submit" onclick="requestCardNonce(event)">
+    <div style="text-align:center;"><input type="submit" onclick="requestCardNonce(event)"></div>
   </form>
 </body>
 </html>

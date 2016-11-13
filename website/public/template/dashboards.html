@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="charityStatement">
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+		<link href="/css/custom.css" rel="stylesheet">
+		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
+        <link type="text/css" rel="stylesheet" href="css/creative.css" />
+
+	</head>	
+	<body>
+    <link href="/css/button.css" rel="stylesheet">
+	<body style="background-color: #001f3f; padding: 0">
+		<div ng-controller="CharityCtrl" >
+			<div style="margin-top: 20px; margin-left: 20px; padding-left: 20px" id="signin-container"> 
+				<div id="signed-in-status" style="color: white; display:inline-block;"> 
+				</div> 
+				 <a href="#" style="color:white; display:none;" id="sign-out-button" ng-click="signOut()"> (Sign out)</a> 
+			</div>
+			<button id="sign-in-button" type="button" class="btn btn-default" style="margin-left:20px"
+			ng-click="showSignInOptions()"> Sign in </button>
+			<div id="firebaseui-auth-container" style="display:none"> </div>
+		</div>
+        <div class="jumbotron" style="background-color: #001f3f">
+        	<div id="titleText" style="text-align: center">
+                <h1 id="button" style="color: #ffffff">Dashboard</h1>
+            </div>
+        </div>
+
+		<form style="margin-top=1px" action="searchforms">
+            <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
+			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem"/>
+            </div>
+		</form>
+
+		<% productBuys.forEach(function(product) { %>
+			<div class="col-md-13" style="margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;">
+			  <!--First review-->
+			  <div class="media">
+				  <a class="media-left waves-light">
+					  <img src= <%= product.img %> class="rounded-circle" alt="Generic placeholder image" style="width: 90px;      height: 90px;">
+				  </a>
+				  <div class="media-body">
+					  <a href=<%= product.link %> ><h4 style="color: white" class="media-heading"> <%= product.name %></h4></a>
+					  <p style="color: white"> <%= desc %> </p>
+				  </div>
+			  </div>
+			 </div>
+    	 <% }); %>
+
+
+
+		<!-- post-loaded dependencies -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.js"></script>
+		<script src="controllers/controller.js"></script>
+
+	</body>
+</html>

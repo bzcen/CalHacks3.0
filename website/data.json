@@ -1,5 +1,5 @@
 {
-    "id": 2,
+    "id": 4,
     "values" : [
         {
             "name": "Red Cross",
@@ -10,6 +10,37 @@
             "name": "Hope For Haiti",
             "desc": "We work to improve the quality of life for the Haitian people, particularly children.",
             "img": "http://www.thecreativebodega.com/nicheonline/wp-content/uploads/2013/04/hope-for-haiti.jpg"
+        },
+        {
+            "name": "Feeding America",
+            "desc": "Feeding America is a hunger organization with a nationwide network of food banks feeding the hungry.",
+            "img": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Feeding_America_logo.svg/1280px-Feeding_America_logo.svg.png"
+        },
+        {
+            "name": "Salvation Army",
+            "desc": "The Salvation Army is a Christian church and international charitable organisation structured in a quasi-military fashion.",
+            "img": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/The_Salvation_Army.svg/868px-The_Salvation_Army.svg.png"
+        },
+        {
+            "name": "YMCA",
+            "desc": "YMCA programs celebrate and honor common values of respect, responsibility, honesty, and caring by infusing character development into programs.",
+            "img": "https://www.ymcamn.org/themes/custom/ymca/img/ymca-logo-social.png"
+        },
+        {
+            "name": "United Way",
+            "desc": "United Way Worldwide is the leadership and support organization for the network of nearly 1,800 community-based United Ways in 45 countries and territories.",
+            "img": "http://unitedwaysuwanneevalley.org/images/united-way-lock-up-rgb%20(Small).jpg"
+        },
+        {
+            "name": "American Civil Liberties Union",
+            "desc": "The American Civil Liberties Union (ACLU) is a national organization that works daily in courts, legislatures and communities to defend the individual rights of the people.",
+            "img": "http://unitedwaysuwanneevalley.org/images/united-way-lock-up-rgb%20(Small).jpg"
+        },
+        {
+            "name": "Asian Americans Advancing Justice",
+            "desc": "A non-profit legal aid and civil rights organization dedicated to advocating for civil rights, providing legal services and education for APAs",
+            "img": "https://www.advancingjustice.org/images/AAAJ_website.jpg"
+>>>>>>> e936e56d6e2c4f26c65c603c163ed021ab7dee37
         }
     ]
 }

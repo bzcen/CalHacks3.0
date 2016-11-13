@@ -21,18 +21,22 @@ var average_fear;
 var average_joy;
 var average_sadness;
 
+var globalName;
+
 // trashy way of handling asynch issues
 var counter = 0;
 var myQuery;
-	
+// mapped object of all of the discovered values
+var analyzedValues;
+
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
-  username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
-  password: 'nFuykKJpWZmg',
+  username: 'c748a5a5-257c-4171-9644-bddc1ce715f2',
+  password: 'z2YjIdQoJFPx',
   version_date: '2016-05-19'
 });
 
-function analyzeTone(paragraph) {
+function analyzeTone(paragraph, res) {
   var params = {
     text: paragraph,
     tones: 'emotion',
@@ -53,23 +57,23 @@ function analyzeTone(paragraph) {
       counter += 1;
       // once all asynch calls are done, call final output calculation function
       if (counter => maxDocs) {
-        finalCalc();
+        finalCalc(res);
       }
     }
 
   });
 }
 
-var maxDocs = 2;
+var maxDocs = 1;
 var startTime = 'now-12h';
 var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
-  api_key: 'cb873efd5b3a458bfaf914ec040c1e490d61c92a'
+  api_key: '641dfd0e780764fb42517294d35c4d9ab8e56641'
 });
 
-function processNews(query) {
+function processNews(query, res) {
 
   myQuery = query;
   // create a new Alchemy News query using search term
@@ -78,7 +82,7 @@ function processNews(query) {
       end: endTime,
       count: maxDocs,
       'q.enriched.url.title': query,
-      return: 'enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.docSentiment'
+      return: 'enriched.url.title,enriched.url.text,enriched.url.enrichedTitle.docSentiment,enriched.url.keywords.keyword.text'
   };
 
   alchemy_data_news.getNews(params, function (err, news) {
@@ -88,6 +92,11 @@ function processNews(query) {
       // returns news
       console.log(JSON.stringify(news, null, 2));
 
+      // if not enough to fill maxDocs, then error out
+      if (maxDocs > news.result.docs.length) {
+        console.log('NOT ENOUGH DATA POINTS FOUND');
+      }
+
       average_sentiment = 0;
       average_sadness = 0;
       average_joy = 0;
@@ -96,23 +105,28 @@ function processNews(query) {
       average_anger = 0;
       counter = 0;
       for (var i = 0; i < maxDocs; i++) {
-        //var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
-        console.log(s);
+        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         average_sentiment += s;
         // update global average values
-        analyzeTone(news.result.docs[i].source.enriched.url.text);
+        analyzeTone(news.result.docs[i].source.enriched.url.text, res);
       }
   });
 }
 
-function finalCalc() {
+function finalCalc(res) {
   // FINAL AVERAGE VALUES
   average_sentiment /= maxDocs;
+  average_sentiment = average_sentiment.toFixed(2);
   average_joy /= maxDocs;
+  average_joy = average_joy.toFixed(2);
   average_sadness /= maxDocs;
+  average_sadness = average_sadness.toFixed(2);
   average_fear /= maxDocs;
+  average_fear = average_fear.toFixed(2);
   average_anger /= maxDocs;
+  average_anger = average_anger.toFixed(2);
   average_disgust /= maxDocs;
+  average_disgust /= average_disgust.toFixed(2);
 
   console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');
   console.log(average_sentiment);
@@ -125,7 +139,28 @@ function finalCalc() {
   console.log('AVERAGE DISGUST OF TEXT IS...');
   console.log(average_disgust);
   console.log('AVERAGE ANGER OF TEXT IS...');
-  console.log(average_joy);
+  console.log(average_joy); 
+
+  analyzedValues = {
+    avg_sentiment: average_sentiment,
+    avg_joy: average_joy,
+    avg_sadness: average_sadness,
+    avg_fear: average_fear,
+    avg_anger: average_anger,
+    avg_disgust: average_disgust
+  };
+
+  fs.readFile('public/template/description.html', 'utf-8', function(err, content) {
+          if (err) {
+             console.log(err);
+             res.end("Error: Check Server command logs");
+            return;
+          }
+          console.log('rendered');
+            var renderedHtml = ejs.render(content, {name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            //get redered HTML code
+            res.end(renderedHtml);
+  });
 }
 
 
@@ -142,8 +177,27 @@ app.use("/partials", express.static(__dirname+"/template/partials"));
 
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
-	console.log('Base name:' + __dirname);
 	res.sendFile(TEMPLATE_DIR + 'index.html');
+});
+
+app.get('/dashboards', function(req,res) {
+    // grab users
+    // grab a list of product names
+    // open the doc and get the data
+    //
+    // pass it 
+    fs.readFile('public/template/dashboards.html', 'utf-8', function(err, content) {
+        if (err) {
+          console.log(err);
+          res.end("Error: Check Server command logs");
+          return;
+        }
+
+        console.log(search);
+        var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img});  //get redered HTML code
+        res.end(renderedHtml);
+    });
+    return;
 });
 
 app.get('/description',
@@ -154,14 +208,15 @@ app.get('/description',
 
     function(req, res) {
 
-        console.log(req.form.name);
+        globalName = req.form.name;
 
         app.set('views', __dirname + "/public/template");
         console.log('Base name:' + __dirname);
 
-        processNews(req.form.name);
+        processNews(req.form.name, res);
 
-        res.sendFile(TEMPLATE_DIR + 'description.html');
+
+
 });
 
 var resultElement = fs.readFileSync("public/template/partials/result_element.html", "utf8");
@@ -263,7 +318,7 @@ app.get('/searchforms',
         console.log("OBJ: " + obj.id);
 
         for(var i = 0; i < obj.id; i++) {
-            if (obj.values[i].name == search)
+            if (obj.values[i].name.toLowerCase() == search.toLowerCase())
             {
                 match = true;
                 fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {

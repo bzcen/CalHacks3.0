@@ -1,2 +1,4 @@
 *.DS_Store
 *.json
+website/node_modules/*
+website/data.json

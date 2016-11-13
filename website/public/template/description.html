@@ -6,9 +6,16 @@
 		<link href="/css/button.css" rel="stylesheet">
 	</head>
 	<body  style="background-color: #001f3f">
+		<div id="sentiment" style="display: none;"><%= sentiment %></div>
+		<div id="sadness" style="display: none;"><%= sadness %></div>
+		<div id="joy" style="display: none;"><%= joy %></div>
+		<div id="anger" style="display: none;"><%= anger %></div>
+ 		<div id="fear" style="display: none;"><%= fear %></div>
+		<div id="disgust" style="display: none;"><%= disgust %></div>
+
         <div id="bgcity" class="jumbotron text-center">
         	<div id="titleText">
-                <h1 style="color: #000000"><%= name %></h1>
+                <h1 id="namefield" style="color: #000000"><%= name %></h1>
             </div>
         </div>
 
@@ -17,18 +24,84 @@
 		  <div class="row">
 			<div class="col-md-6">
 			  <h2>Description</h2>
-			  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+			  <p id="description">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <script>
+                 var obj=  {"id": 8,"values" : [{"name": "Red Cross","desc": "The American Red Cross, also known as the American     National Red Cross, is a humanitarian organization that provides emergency  assistance, disaster relief and education in the United States.", "img": "https://www.redcross.org/images/                        MEDIA_CustomProductCatalog/m48040100_ButtonLogo200.jpg"},{"name": "Hope For Haiti", "desc": "We work to improve the quality of life for the         Haitian people, particularly children.", "img": "http://www.thecreativebodega.com/nicheonline/wp-        content/uploads/2013/04/hope-for-haiti.jpg"},{"name": "Feeding America", "desc": "Feeding America is a hunger organization with a        nationwide network of food banks feeding the hungry.", "img": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/   Feeding_America_logo.svg/1280px-Feeding_America_logo.svg.png"},{"name": "Salvation Army","desc": "The Salvation Army is a Christian church and           international charitable organisation structured in a quasi-military        fashion.","img": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/   The_Salvation_Army.svg/868px-The_Salvation_Army.svg.png" }, {"name": "YMCA", "desc": "YMCA programs celebrate and honor common values of     respect, responsibility, honesty, and caring by infusing character          development into programs.", "img": "https://www.ymcamn.org/themes/custom/ymca/img/ymca-     logo-social.png"}, {"name": "United Way", "desc": "United Way Worldwide is the leadership and support     organization for the network of nearly 1,800 community-based United Ways    in 45 countries and territories.","img": "http://unitedwaysuwanneevalley.org/images/united-way-   lock-up-rgb%20(Small).jpg"},{"name": "American Civil Liberties Union","desc": "The American Civil Liberties Union (ACLU) is a         national organization that works daily in courts, legislatures and          communities to defend the individual rights of the people.","img": "http://unitedwaysuwanneevalley.org/images/united-way-   lock-up-rgb%20(Small).jpg" },{ "name": "Asian Americans Advancing Justice","desc": "A non-profit legal aid and civil rights organization   dedicated to advocating for civil rights, providing legal services and      education for APAs","img": "https://www.advancingjustice.org/images/AAAJ_website.   jpg"}]} ;
+			 
+				var name = document.getElementById("namefield").innerHTML;
+				console.log(name); 
+
+				//Check against JSONFILE
+				for (var i = 0; i < obj.id; i++) {
+					if (obj.values[i].name.toLowerCase() == name.toLowerCase())
+					{
+						document.getElementById("description").innerHTML = obj.values[i].desc;
+					}
+				}
+
+              </script>
 			  <h3>Similar Charities</h3>
 			  <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button>
 		   </div>
 			<div class="col-md-6">
 			  <h2>Sentiment Score</h2>
-			  <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+			  <div style="text-align:middle;">
+			  			  <!-- ripped from html5 canvas tutorials -->
+			<canvas id="myCanvas" width="200" height="200" ></canvas>
+				<script>
+					      var canvas = document.getElementById('myCanvas');
+					      var s = document.getElementById('sentiment').innerHTML;
+
+					      var context = canvas.getContext('2d');
+					      var centerX = canvas.width / 2;
+					      var centerY = canvas.height / 2;
+					      var radius = 70;
+
+					      context.beginPath();
+					      context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+					      console.log(s);
+					      if (s >= 0.5) {
+					      	context.fillStyle = '#97dd7e';
+					      	context.strokeStyle = '#5e9949';
+					      } else if (s >= 0) {
+					      	context.fillStyle = '#f1f489';
+					      	context.strokeStyle = '#dbc27f';
+					      } else if (s >= -0.5) {
+					      	context.fillStyle = '#cc926c';
+					      	context.strokeStyle = '#d66f46';
+					      } else {
+					      	context.fillStyle = '#ad4743';
+					      	context.strokeStyle = '#871511';
+					      }
+					      context.fill();
+					      context.lineWidth = 5;
+					      context.stroke();
+
+					      context.textAlign = 'center';
+					      context.font = '40pt Helvetica'
+					                  context.fillStyle = 'white';
+            				context.fillText(s, centerX, centerY+24);
+
+
+					    </script>
+					    <p style="display: inline-block; vertical-align: middle;">testing</p>
+					</div>
 			  <h3>Keyword Analysis</h3>
 			  <h3>Tone Analysis</h3>
+			  <p> <%= sentiment %> </p>
+			  <p> <%= sadness %> </p>
 
-			</div>
-		  </div>
+			  <p> <%= joy %> </p>
+
+			  <p> <%= anger %> </p>
+
+			  <p> <%= disgust %> </p>
+
+			  <p> <%= fear %> </p>
+
+
+								</div>
+							  </div>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
