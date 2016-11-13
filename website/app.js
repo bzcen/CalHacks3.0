@@ -111,6 +111,14 @@ function processNews(query, res) {
       average_anger = 0;
       counter = 0;
       if (news) {
+        // for (var i = 0; i < maxDocs; i++) {
+        //   var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+        //   average_sentiment += s;
+        //   // insert keywords
+        //   for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
+        //     globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
+        //   }
+          
         for (var i = 0; i < maxDocs; i++) {
           var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
           average_sentiment += s;
@@ -118,15 +126,8 @@ function processNews(query, res) {
           for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
             globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
           }
-      for (var i = 0; i < maxDocs; i++) {
-        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
-        average_sentiment += s;
-        // insert keywords
-        for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
-          globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
-        }
-        // insert headline
-        recentHeadlines.push(news.result.docs[i].source.enriched.url.title);
+          // insert headline
+          recentHeadlines.push(news.result.docs[i].source.enriched.url.title);
 
           // update global average values
           analyzeTone(news.result.docs[i].source.enriched.url.text, res);

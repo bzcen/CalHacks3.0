@@ -16,16 +16,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
 		<link href="/css/button.css" rel="stylesheet">
-<<<<<<< HEAD
 	    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 	    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
 	    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
 	    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase-database.js"></script>
 	    <script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
-=======
-		    <link rel="stylesheet" href="/css/style.css">
+	    <link rel="stylesheet" href="/css/style.css">
 
->>>>>>> b703f76bc54871d55f80b127ccbc77936bc13684
 	</head>
 	<body  style="background-color: #001f3f">
 		<div id="sentiment" style="display: none;"><%= sentiment %></div>
@@ -96,7 +93,7 @@
 				   	var database = firebase.database().ref('/');
 				    if(fbUser) {
 				      console.log('fbUser id: ' + fbUser.uid);
-				      database = database.child(fbUser.uid);
+				      database = database.child(fbUser.uid).child('charities');
 				      //database.ref('ref/').set(document.getElementById('sq-expiration-date').value);
 				      
 				      database.once('value').then(function(snapshot) {
@@ -107,7 +104,9 @@
 				       });
 				       //update[search] = search;
 				       //update['sq-expiration-date'] = document.getElementById('sq-expiration-date').value;
-				       update['test'] = 'test';
+				       
+				       var name = document.getElementById("namefield").innerHTML;
+					   update[name] = name;
 				       database.update(update).then(() => {
 				        console.log("successful");
      				   	window.location.href = '/payment';
@@ -121,7 +120,7 @@
 			 
 			  </script>
 			  <button type="button" class="btn btn-success" onclick="donate()">Donate Now</button>
-              			  <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button>
+              			  <!-- <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button> -->
               			  <br></br>
               <h3 id='links'> Latest News </h3>
               <h6><a href="google.com" style="color: #d3d3d3"> gorrilla escapes from zoo</a></h6>
