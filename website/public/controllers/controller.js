@@ -16,7 +16,6 @@ charityStatement.controller('CharityCtrl', ['$scope', '$http', '$sce', '$templat
         } else {
 	        $scope.htmlToAdd += '<br>';
 	    	$scope.htmlToAdd += blankHtml;
-	    	$scope.htmlToAdd 
 	    }
     }
 
@@ -51,25 +50,32 @@ charityStatement.controller('CharityCtrl', ['$scope', '$http', '$sce', '$templat
       	ui.start('#firebaseui-auth-container', uiConfig);
 
       	//$scope.initApp = function() { 
-      		firebase.auth().onAuthStateChanged(function(user) {
-      			if(user) {
-      				console.log("log in successful");
-      				document.getElementById("firebaseui-auth-container").style.display="none";
-      				document.getElementById("sign-in-button").style.display="none";
-      				document.getElementById("signed-in-status").style.display="inline-block";
-					document.getElementById("signed-in-status").textContent = 
-					'Signed in as: ' + user.email;
-      				document.getElementById("sign-out-button").style.display="inline-block";
-      				console.log("end log in successful");
-      			} else {
-      				console.log("signed out");
-      				document.getElementById("sign-in-button").style.display="inline-block";
-      				document.getElementById("signed-in-status").style.display="none";
-      				document.getElementById("sign-out-button").style.display="none";
-      				console.log("end signed out successful");
-      			}
-      		});
+  		firebase.auth().onAuthStateChanged(function(user) {
+  			if(user) {
+  				console.log("log in successful");
+  				document.getElementById("firebaseui-auth-container").style.display="none";
+  				document.getElementById("sign-in-button").style.display="none";
+  				document.getElementById("signed-in-status").style.display="inline-block";
+				document.getElementById("signed-in-status").textContent = 
+				'Signed in as: ' + user.email;
+  				document.getElementById("sign-out-button").style.display="inline-block";
+  				console.log("end log in successful");
+  			} else {
+  				console.log("signed out");
+  				document.getElementById("sign-in-button").style.display="inline-block";
+  				document.getElementById("signed-in-status").style.display="none";
+  				document.getElementById("sign-out-button").style.display="none";
+  				console.log("end signed out successful");
+  			}
+  		});
       	//}
+
+      	$scope.doStuff = function() {
+      		$scope.alert("something happened");
+      		console.log('pushing charity name');
+      		firebase.database().ref('/').push().update({'charity': $scope.charityname});
+      		console.log('charityname: ' + $scope.charityname);
+      	}
 
       	$scope.showSignInOptions = function() {
       		document.getElementById("sign-in-button").style.display="none";
