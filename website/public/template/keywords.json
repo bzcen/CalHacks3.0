@@ -1,0 +1,306 @@
+{
+    "id": 19,
+    "values" : [
+        {
+            "name": "Red Cross",
+            "keywords": [
+            	"blood",
+            	"health",
+            	"earthquake-affected",
+            	"urgent needs",
+            	"Red Cross",
+            	"thanks"
+            ]
+        },
+        {
+            "name": "Hope For Haiti",
+            "keywords": [
+            	"seasonal workers",
+            	"Haiti",
+            	"private contractors",
+            	"size",
+            	"sanitation",
+            	"alternative development ideas"
+            ]
+        },
+        {
+            "name": "Feeding America",
+            "keywords": [
+            	"families",
+            	"resource management",
+            	"America",
+            	"feeding",
+            	"hunger crisis",
+            	"communities",
+            	"food"
+            ]
+        },
+        {
+            "name": "Salvation Army",
+            "keywords": [
+            	"hunger crisis",
+            	"international",
+            	"soup kitchen",
+            	"feeding",
+            	"Salvation Army",
+            	"communities",
+            	"food"
+            ]
+        },
+        {
+            "name": "YMCA",
+            "keywords": [
+            	"YMCA",
+            	"run",
+            	"communities",
+            	"immigrants",
+            	"poor",
+            	"cohesion",
+            	"food"
+            ]
+        },
+        {
+            "name": "United Way",
+            "keywords": [
+            	"United Way",
+            	"support",
+            	"international",
+            	"worldwide",
+            	"government projects",
+            	"social health",
+            	"education"
+            ]
+        },
+        {
+            "name": "American Civil Liberties Union",
+            "keywords": [
+            	"social health",
+            	"American",
+            	"America",
+            	"civil liberties",
+            	"worldwide",
+            	"individual rights",
+            	"courts",
+            	"communities",
+            	"legislature"
+            ]
+        },
+        {
+            "name": "Asian Americans Advancing Justice",
+            "keywords": [
+            	"Asian Americans",
+            	"civil liberties",
+
+            	"American",
+            	"worldwide",
+            	"individual rights",
+            	"justice",
+            	"courts",
+            	"legistlature"
+            ]
+        },
+        {
+            "name": "Wounded Warrior Project",
+            "keywords": [
+            	"American",
+            	"veterans",
+            	"health",
+            	"mental health",
+            	"individual rights",
+            	"justice",
+            	"military"
+            ]
+        },
+        {
+            "name": "Doctors Without Borders",
+            "keywords": [
+            	"international",
+            	"doctors",
+            	"health",
+            	"war zone",
+            	"borders",
+            	"medical aid",
+            	"Syria"
+            ]
+        },
+        {
+            "name": "Cancer Research Institute",
+            "keywords": [
+            	"cancer",
+            	"health",
+            	"doctors",
+            	"researchers",
+            	"research",
+            	"international",
+            	"money"
+            ]
+        },
+                {
+            "name": "Breast Cancer Fund",
+            "keywords": [
+            	"woman",
+            	"women",
+            	"health",
+            	"research",
+            	"medicine",
+            	"breast cancer",
+            	"cancer",
+            	"fund",
+            	"doctors"
+            ]
+        },
+        {
+            "name": "Center for Reproductive Rights",
+            "keywords": [
+            	"individual rights",
+            	"reproduction",
+            	"women",
+            	"legistlature",
+            	"American",
+            	"health",
+            	"medicine",
+            	"Texas",
+            	"abortion"
+            ]
+        },
+        {
+            "name": "Prostate Cancer Foundation",
+            "keywords": [
+            	"personal health",
+            	"medicine",
+            	"health",
+            	"research",
+            	"prostate",
+            	"prostate cancer",
+            	"cancer",
+            	"funding",
+            	"doctors"
+            ]
+        },
+        {
+            "name": "Union of Concerned Scientists",
+            "keywords": [
+            	"scientists",
+            	"health",
+            	"doctors",
+            	"researchers",
+            	"research",
+            	"international",
+            	"education"
+            ]
+        },
+        {
+            "name": "National Rifle Association",
+            "keywords": [
+            	"American",
+            	"Rifle",
+            	"individual rights",
+            	"guns",
+            	"legislature",
+            	"liberty",
+            	"courts"
+            ]
+        },
+        {
+            "name": "Hispanic Scholarship Fund",
+            "keywords": [
+            	"American",
+            	"education",
+            	"Hispanic",
+            	"scholarship",
+            	"fund",
+            	"college",
+            	"school"
+            ]
+        },
+        {
+            "name": "Coalition for the Homeless",
+            "keywords": [
+            	"American",
+            	"homeless",
+            	"poor",
+            	"food",
+            	"hunger crisis",
+            	"legislature",
+            	"water"
+            ]
+        },
+        {
+            "name": "Habitat for Humanity",
+            "keywords": [
+            	"international",
+            	"American",
+            	"shelter",
+            	"homes",
+            	"homeless",
+            	"aid",
+            	"contractors",
+            	"Africa"
+            ]
+        },
+        {
+            "name": "Africare",
+            "keywords": [
+            	"international",
+            	"shelter",
+            	"clean water",
+            	"Africa",
+            	"aid",
+            	"alternative development ideas"
+            ]
+        },
+        {
+            "name": "NAMI",
+            "keywords": [
+            	"mental health",
+            	"research",
+            	"legislature",
+            	"individual rights",
+            	"Sydney",
+            	"medicine"
+            ]
+        },
+        {
+            "name": "International Peace Institute",
+            "keywords": [
+            	"international",
+            	"peace",
+            	"warzone",
+            	"Syria",
+            	"Turkey",
+            	"volunteers",
+            	"individual rights",
+            	"invasion",
+            	"military"
+            ]
+        },
+        {
+            "name": "Fisher House Foundation",
+            "keywords": [
+            	"military",
+            	"mental health",
+            	"military family",
+            	"American",
+            	"scholarship",
+            	"education",
+            	"veterans",
+            	"Fisher",
+            	"communities"
+            ]
+        },
+        {
+            "name": "Semper Fi Fund",
+            "keywords": [
+            	"military family",
+            	"military",
+            	"mental health",
+            	"9/11",
+            	"American",
+            	"veterans",
+            	"education",
+            	"marines",
+            	"communities"
+            ]
+        }
+    ]
+}
