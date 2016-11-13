@@ -27,7 +27,10 @@
  		<div id="fear" style="display: none;"><%= fear %></div>
 		<div id="disgust" style="display: none;"><%= disgust %></div>
 		<div id="name" style="display: none;"><%= name %></div>
+		<!-- keywords separated by commas -->
 		<div id="keywords" style="display: none;"><%= keywords %></div>
+		<!-- headlines separated by | -->
+		<div id="headlines" style="display: none;"><%= headlines %></div>
 
         <div id="bgcity" class="jumbotron text-center">
         	<div id="titleText">
@@ -58,6 +61,10 @@
               </script>
               			  <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button>
               			  <br></br>
+              <h3 id='links'> Latest News </h3>
+              <h6><a href="google.com" style="color: #d3d3d3"> gorrilla escapes from zoo</a></h6>
+              <h6 style="padding-bottom=15px"><a style="color: #d3d3d3" href="facebook.com"> wow </a></h6>
+
 			  <h3 id='charities-header'>Similar Charities</h3>
 			  <script>
 					var  w = 300,h =  300,circleWidth = 5;
@@ -342,10 +349,10 @@ force.start();
 				.selectAll("div")[0][4]
 					.style.backgroundColor = "#990000";
 
-	</script>
+                </script>
 
-								</div>
-							  </div>
+		    </div>
+        </div>
 
 		<!-- post-loaded dependencies -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
