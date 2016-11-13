@@ -123,8 +123,17 @@
               			  <!-- <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button> -->
               			  <br></br>
               <h3 id='links'> Latest News </h3>
-              <h6><a href="google.com" style="color: #d3d3d3"> gorrilla escapes from zoo</a></h6>
-              <h6 style="padding-bottom=15px"><a style="color: #d3d3d3" href="facebook.com"> wow </a></h6>
+              <script>
+              var headlines = document.getElementById("headlines").innerHTML;
+              console.log(headlines);
+              var split = headlines.split("|");
+              split.sort(function(a,b){return 0.5 - Math.random()});
+              for (var i = 0; i < split.length; i++) {
+              	document.write("<h6><a style=\"color: #d3d3d3\">");
+              	document.write(split[i]);
+              	document.write("</a></h6>");
+              }
+              </script>
 
 			  <h3 id='charities-header'>Similar Charities</h3>
 			  <script>
@@ -307,22 +316,36 @@ force.start();
 					    </script>
 					    <p style="display: inline-block; vertical-align: middle;">testing</p>
 					</div>
-			  <h3>Keyword Analysis</h3>
+			  <h3>Discovered Keywords</h3>
 
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
+                                        	
+                                        	<tbody><script>
+                                        	var keywords = document.getElementById("keywords").innerHTML;
+                                        	var split = keywords.split(",");
+                                        	split.sort(function(a,b){return 0.5 - Math.random()});
 
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                                         <tbody>
-                                                <tr>
+                                        	var counter = 0;
+                                        	var upperlimit = split.length;
+                                        	if (upperlimit > 10){
+                                        		upperLimit = 10;
+                                        	}
+                                        	while (counter < upperLimit){
+                                        		document.write('<tr>');
+                                        		document.write('<td>');
+                                        		document.write(split[counter]);
+                                        		counter += 1;
+                                        		document.write('</td>');
+                                        		document.write('<td>');
 
+                                        		document.write(split[counter]);
+                                        		document.write('</td>');
+                                        		document.write('</tr>');
+                                        		counter += 1;
 
-                                                    <td>3:29 PM</td>
-                                                </tr>
+                                        	}
+                                        	</script>
                                             </tbody>
                                         </table>
                                     </div>
