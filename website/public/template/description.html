@@ -6,12 +6,12 @@
 		<link href="/css/button.css" rel="stylesheet">
 	</head>
 	<body  style="background-color: #001f3f">
-		<div id="sentiment" style="display: none;"><%= sentiment %></div>
-		<div id="sadness" style="display: none;"><%= sadness %></div>
-		<div id="joy" style="display: none;"><%= joy %></div>
-		<div id="anger" style="display: none;"><%= anger %></div>
- 		<div id="fear" style="display: none;"><%= fear %></div>
-		<div id="disgust" style="display: none;"><%= disgust %></div>
+		<div id="sentiment" style="display: none;">1</div>
+		<div id="sadness" style="display: none;">0.1</div>
+		<div id="joy" style="display: none;">.9</div>
+		<div id="anger" style="display: none;">.3</div>
+ 		<div id="fear" style="display: none;">.45</div>
+		<div id="disgust" style="display: none;">.2</div>
 
         <div id="bgcity" class="jumbotron text-center">
         	<div id="titleText">
@@ -88,16 +88,16 @@
 					</div>
 			  <h3>Keyword Analysis</h3>
 			  <h3>Tone Analysis</h3>
-			  <p> <%= sentiment %> </p>
-			  <p> <%= sadness %> </p>
+			  <!-- <p> <%= sentiment %> </p>
+			  <p style="color:#5cb85c"> <%= joy %> </p>
 
-			  <p> <%= joy %> </p>
+				<p style="color:#990000"> <%= sadness %> </p>
 
-			  <p> <%= anger %> </p>
+			  <p style="color:#990000"> <%= anger %> </p>
 
-			  <p> <%= disgust %> </p>
+			  <p style="color:#990000"> <%= disgust %> </p>
 
-			  <p> <%= fear %> </p>
+			  <p style="color:#990000"> <%= fear %> </p> -->
 
 				<style>
 
@@ -114,25 +114,62 @@
 	<div class="chart"></div>
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script>
-	var sadness = document.getElementById("sadness").innerHTML;
-	var joy = document.getElementById("joy").innerHTML;
-	var anger = document.getElementById("anger").innerHTML;
-	var fear = document.getElementById("fear").innerHTML;
-	var disgust = document.getElementById("disgust").innerHTML;
+	var sadness = {
+		'name': 'sadness',
+		'val': document.getElementById("sadness").innerHTML
+	}
+	var joy = {
+		'name': 'joy',
+		'val': document.getElementById("joy").innerHTML
+	}
+	var anger = {
+		'name': 'anger',
+		'val': document.getElementById("anger").innerHTML
+	}
+	var fear = {
+		'name': 'fear',
+		'val': document.getElementById("fear").innerHTML
+	}
+	var disgust = {
+		'name': 'disgust',
+		'val': document.getElementById("disgust").innerHTML
+	}
 	var data = [joy, sadness, anger, fear, disgust];
 
 	var x = d3.scale.linear()
 	    .domain([0, d3.max(data)])
-	    .range([0, 420]);
+	    .range([0, 30]);
 
 	d3.select(".chart")
 	  .selectAll("div")
 	    .data(data)
 	  .enter().append("div")
-	    .style("width", function(d) { return x(d) + "px"; })
-	    .text(function(d) { return d; });
+	    .style("width", function(d) { return d.val * 500 + "px"; })
+			.style("height", "50px")
+			.style("text-align", "right")
+			.style("font-size", "12px")
+	    .text(function(d) { return d.val + " " + d.name; })
 
-	console.log(x)
+			d3.select(".chart")
+				.selectAll("div")[0][0]
+					.style.backgroundColor = "#5cb85c";
+
+			d3.select(".chart")
+				.selectAll("div")[0][1]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][2]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][3]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][4]
+					.style.backgroundColor = "#990000";
+
 	</script>
 
 								</div>
