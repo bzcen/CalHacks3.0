@@ -355,7 +355,7 @@ app.get('/searchforms',
               return;
             }
 
-            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A", img : "", link: ""});  //get redered HTML code
+            var renderedHtml = ejs.render(content, {name : "No Results", desc : "N/A", img : "http://www.mikeanthony.me/wp-content/uploads/2015/05/9647972522_89abb20da5_o.jpg", link: ""});  //get redered HTML code
             res.end(renderedHtml);
         });
     });
