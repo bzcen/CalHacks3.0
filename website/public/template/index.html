@@ -98,10 +98,12 @@
         </div>
 
         <br></br>
-		<form action="searchforms">
+		<form  ng-submit="doStuff()" >
             <div style="margin-left: 30px; margin-right: 30px" class="form-group row">
-			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem"/>
+			    <input type="text" ng-model="charityname" class="form-control" placeholder="input a charity" name="searchItem" />
             </div>
+            <input type="submit"> </input>
+
 		</form>
 
 		<!-- post-loaded dependencies -->

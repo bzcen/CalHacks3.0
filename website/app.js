@@ -9,6 +9,7 @@ var form = require('express-form');
 var bodyParser = require('body-parser');
 var https = require('https');
 var unirest = require('unirest');
+//var firebase = require('firebase-admin');
 
 var field = form.field;
 app.use(bodyParser());
@@ -23,7 +24,7 @@ var average_sadness;
 // trashy way of handling asynch issues
 var counter = 0;
 var myQuery;
-
+	
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '94e52a18-b0e7-4f60-86d3-7f4f41df6bb6',
@@ -224,9 +225,7 @@ app.get('/searchforms',
 
   function(req, res){
     var search = req.form.searchItem;
-    console.log(search);
-
-
+    console.log("search: " + search);
     // look for all the fittings here
     var re = /\0/g;
 
@@ -239,6 +238,28 @@ app.get('/searchforms',
 
         console.log("TERM: " + search);
 
+    	// firebase.initializeApp({
+    	// 	databaseURL: "https://charitystatement.firebaseio.com",
+    	// 	serviceAccount: './charitystatement-firebase-adminsdk-8ez4f-eebfe3aeaf.json'
+    	// });
+    	// var firebaseRef = firebase.database().ref("/");
+
+
+    	// firebaseRef.once('value').then(function(snapshot) {
+	    // 	var update = {};
+	    // 	snapshot.forEach(function(childSnapshot) {
+	    // 		update[childSnapshot.key] = childSnapshot.val();
+	    // 	});
+	    // 	update[search] = search;
+
+	    // 	console.log("update: " + update['search']);
+
+	    // 	firebase.database().ref("/").update(update).then(() => {
+	    // 		console.log("successful");
+	    // 	}).catch(error => {console.log("failed")});
+	    // }).catch(function(error) {
+	    // 	console.log('failed to update database', error);
+	    // });
         console.log("OBJ: " + obj.id);
 
         for(var i = 0; i < obj.id; i++) {
@@ -262,7 +283,6 @@ app.get('/searchforms',
             }
         }
 
-        var search = "";
         fs.readFile('public/template/indextwo.html', 'utf-8', function(err, content) {
             if (err) {
               console.log(err);
