@@ -13,6 +13,7 @@
 		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase-database.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
 		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
         <link type="text/css" rel="stylesheet" href="css/creative.css" />
@@ -27,8 +28,8 @@
 				</div>
 				 <a href="#" style="color:white; display:none;" id="sign-out-button" ng-click="signOut()"> (Sign out)</a>
 			</div>
-			<button id="sign-in-button" type="button" class="btn btn-default" style="margin-left:20px"
-			ng-click="showSignInOptions()"> Sign in </button>
+			<!--<button id="sign-in-button" type="button" class="btn btn-default" style="margin-left:20px"
+			ng-click="showSignInOptions()"> Sign in </button>-->
 			<div id="firebaseui-auth-container" style="display:none"> </div>
 		</div>
         <div class="jumbotron" style="background-color: #001f3f">
@@ -43,20 +44,79 @@
             </div>
 		</form>
 
-		<% productBuys.forEach(function(product) { %>
-			<div class="col-md-13" style="margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;">
-			  <!--First review-->
-			  <div class="media">
-				  <a class="media-left waves-light">
-					  <img src= <%= product.img %> class="rounded-circle" alt="Generic placeholder image" style="width: 90px;      height: 90px;">
-				  </a>
-				  <div class="media-body">
-					  <a href=<%= product.link %> ><h4 style="color: white" class="media-heading"> <%= product.name %></h4></a>
-					  <p style="color: white"> <%= desc %> </p>
-				  </div>
-			  </div>
-			 </div>
-    	 <% }); %>
+ 	<div id="rows"> </div>
+
+		<script>
+			// pull firebase
+			// for each thing ya find 
+				// open up the data.json file
+				//search data.json for the thing ya find
+				// get link, image
+				// generate outerHTML 
+				//append.
+			var config = {
+			        apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
+			        authDomain: "charitystatement.firebaseapp.com",
+			        databaseURL: "https://charitystatement.firebaseio.com",
+			        storageBucket: "charitystatement.appspot.com",
+			        messagingSenderId: "693936859765"
+			      };
+
+			firebase.initializeApp(config);
+			console.log("firebase loaded.. description");
+			var fbUser;
+			firebase.auth()
+			.onAuthStateChanged(function(user) 
+			{
+				fbUser = user;
+				if(user) {
+				  	console.log("log in successful");  
+				  	var database = firebase.database().ref('/');
+				    if(fbUser) 
+				    {
+				      console.log('fbUser id: ' + fbUser.uid);
+				      database = database.child(fbUser.uid).child('charities');
+				      
+				      database.once('value').then(function(snapshot) {
+					       var json;
+					       var xmlHttp = new XMLHttpRequest();
+					       xmlHttp.onreadystatechange = function() {
+					       	if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					       		json = JSON.parse(xmlHttp.responseText);
+					       		snapshot.forEach(function(childSnapshot) {
+ 						       		var key = childSnapshot.key;
+						         	console.log("key: " + key);
+						         	console.log("json.values: " + json.values);
+						         	for(var i = 0; i < json.values.length; ++i) {
+						         		if(json.values[i].name.toLowerCase() == key.toLowerCase()) {
+         			document.getElementById('rows').innerHTML += "<div class='col-md-13' style='margin-left: 20px; margin-right: 20px; margin-top: 5px; margin-bottom: 5px;'>"
+				+   "<div class='media'>"
+				+	"<a class='media-left waves-light'>"
+				+ 	"<img src='"+json.values[i].img+"' class='rounded-circle' alt='Generic placeholder image' style='width: 90px; height: 90px;'>"
+				+   "</a>"
+				+ 	"<div class='media-body'>"
+				+   "<a href='"+json.values[i].desc+"'><h4 style='color: white' class='media-heading'>" + json.values[i].name + "</h4></a>"
+				+   "<p style='color: white'>"+json.values[i].desc+"</p>"
+				+ 	"</div></div></div>"
+						         		}
+						         	}
+				   		   		});
+					       	}
+					       }
+					       xmlHttp.open("GET", "http://brianzhang.io/data.json", true);
+					       xmlHttp.send(null);
+				       });
+				  	}
+				} 
+				else 
+				{
+					console.log("signed out");
+				}
+			});
+				
+
+
+		</script>
 
 
 

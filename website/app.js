@@ -118,7 +118,7 @@ function processNews(query, res) {
         //   for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
         //     globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
         //   }
-          
+
         for (var i = 0; i < maxDocs; i++) {
           var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
           average_sentiment += s;
@@ -221,8 +221,7 @@ app.get('/dashboards', function(req,res) {
           return;
         }
 
-        console.log(search);
-        var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img});  //get redered HTML code
+        var renderedHtml = ejs.render(content);  //get redered HTML code
         res.end(renderedHtml);
     });
     return;
