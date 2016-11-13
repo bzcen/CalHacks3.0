@@ -36,9 +36,9 @@
 			  <p id="description">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
               <script>
                  var obj=  {"id": 8,"values" : [{"name": "Red Cross","desc": "The American Red Cross, also known as the American     National Red Cross, is a humanitarian organization that provides emergency  assistance, disaster relief and education in the United States.", "img": "https://www.redcross.org/images/                        MEDIA_CustomProductCatalog/m48040100_ButtonLogo200.jpg"},{"name": "Hope For Haiti", "desc": "We work to improve the quality of life for the         Haitian people, particularly children.", "img": "http://www.thecreativebodega.com/nicheonline/wp-        content/uploads/2013/04/hope-for-haiti.jpg"},{"name": "Feeding America", "desc": "Feeding America is a hunger organization with a        nationwide network of food banks feeding the hungry.", "img": "https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/   Feeding_America_logo.svg/1280px-Feeding_America_logo.svg.png"},{"name": "Salvation Army","desc": "The Salvation Army is a Christian church and           international charitable organisation structured in a quasi-military        fashion.","img": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/   The_Salvation_Army.svg/868px-The_Salvation_Army.svg.png" }, {"name": "YMCA", "desc": "YMCA programs celebrate and honor common values of     respect, responsibility, honesty, and caring by infusing character          development into programs.", "img": "https://www.ymcamn.org/themes/custom/ymca/img/ymca-     logo-social.png"}, {"name": "United Way", "desc": "United Way Worldwide is the leadership and support     organization for the network of nearly 1,800 community-based United Ways    in 45 countries and territories.","img": "http://unitedwaysuwanneevalley.org/images/united-way-   lock-up-rgb%20(Small).jpg"},{"name": "American Civil Liberties Union","desc": "The American Civil Liberties Union (ACLU) is a         national organization that works daily in courts, legislatures and          communities to defend the individual rights of the people.","img": "http://unitedwaysuwanneevalley.org/images/united-way-   lock-up-rgb%20(Small).jpg" },{ "name": "Asian Americans Advancing Justice","desc": "A non-profit legal aid and civil rights organization   dedicated to advocating for civil rights, providing legal services and      education for APAs","img": "https://www.advancingjustice.org/images/AAAJ_website.   jpg"}]} ;
-			 
+
 				var name = document.getElementById("namefield").innerHTML;
-				console.log(name); 
+				console.log(name);
 
 				//Check against JSONFILE
 				for (var i = 0; i < obj.id; i++) {
@@ -253,17 +253,89 @@ force.start();
                                         </table>
                                     </div>
 			  <h3>Tone Analysis</h3>
-			  <p> <%= sentiment %> </p>
-			  <p> <%= sadness %> </p>
+			  <!-- <p> <%= sentiment %> </p>
+			  <p style="color:#5cb85c"> <%= joy %> </p>
 
-			  <p> <%= joy %> </p>
+				<p style="color:#990000"> <%= sadness %> </p>
 
-			  <p> <%= anger %> </p>
+			  <p style="color:#990000"> <%= anger %> </p>
 
-			  <p> <%= disgust %> </p>
+			  <p style="color:#990000"> <%= disgust %> </p>
 
-			  <p> <%= fear %> </p>
+			  <p style="color:#990000"> <%= fear %> </p> -->
 
+				<style>
+
+	.chart div {
+	  font: 10px sans-serif;
+	  background-color: steelblue;
+	  text-align: right;
+	  padding: 3px;
+	  margin: 1px;
+	  color: white;
+	}
+
+	</style>
+	<div class="chart"></div>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+	var sadness = {
+		'name': 'sadness',
+		'val': document.getElementById("sadness").innerHTML
+	}
+	var joy = {
+		'name': 'joy',
+		'val': document.getElementById("joy").innerHTML
+	}
+	var anger = {
+		'name': 'anger',
+		'val': document.getElementById("anger").innerHTML
+	}
+	var fear = {
+		'name': 'fear',
+		'val': document.getElementById("fear").innerHTML
+	}
+	var disgust = {
+		'name': 'disgust',
+		'val': document.getElementById("disgust").innerHTML
+	}
+	var data = [joy, sadness, anger, fear, disgust];
+
+	var x = d3.scale.linear()
+	    .domain([0, d3.max(data)])
+	    .range([0, 30]);
+
+	d3.select(".chart")
+	  .selectAll("div")
+	    .data(data)
+	  .enter().append("div")
+	    .style("width", function(d) { return d.val * 500 + "px"; })
+			.style("height", "50px")
+			.style("text-align", "right")
+			.style("font-size", "12px")
+	    .text(function(d) { return d.val + " " + d.name; })
+
+			d3.select(".chart")
+				.selectAll("div")[0][0]
+					.style.backgroundColor = "#5cb85c";
+
+			d3.select(".chart")
+				.selectAll("div")[0][1]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][2]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][3]
+					.style.backgroundColor = "#990000";
+
+			d3.select(".chart")
+				.selectAll("div")[0][4]
+					.style.backgroundColor = "#990000";
+
+	</script>
 
 								</div>
 							  </div>

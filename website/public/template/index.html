@@ -13,7 +13,13 @@
 	</head>	
 	<body>
     <link href="/css/button.css" rel="stylesheet">
-	<body style="background-color: #001f3f; padding: 0">
+	<body style="padding: 0">
+        <style type="text/css">
+            body {
+                background-image: url("http://cdn.wonderfulengineering.com/wp-content/uploads/2014/09/blue-wallpaper-7.jpg");
+                background-size: cover;
+            }
+        </style>
 		<div ng-controller="CharityCtrl" >
 			<div style="margin-top: 20px; margin-left: 20px; padding-left: 20px" id="signin-container"> 
 				<div id="signed-in-status" style="color: white; display:inline-block;"> 
@@ -24,9 +30,9 @@
 			ng-click="showSignInOptions()"> Sign in </button>
 			<div id="firebaseui-auth-container" style="display:none"> </div>
 		</div>
-        <div class="jumbotron" style="background-color: #001f3f">
+        <div class="jumbotron" style="background-color:rgba(0,0,0,0)">
         	<div id="titleText" style="text-align: center">
-                <h1 id="button" style="color: #ffffff">Donation Tracker</h1>
+                <h1 id="button" style="color: #ffffffff">Donation Tracker</h1>
             </div>
         </div>
 
