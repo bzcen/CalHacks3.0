@@ -23,6 +23,7 @@ var average_sadness;
 
 var globalName;
 var globalKeywords = [];
+var recentHeadlines = [];
 
 // trashy way of handling asynch issues
 var counter = 0;
@@ -113,6 +114,8 @@ function processNews(query, res) {
         for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
           globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
         }
+        // insert headline
+        recentHeadlines.push(news.result.docs[i].source.enriched.url.title);
 
         // update global average values
         analyzeTone(news.result.docs[i].source.enriched.url.text, res);
@@ -166,8 +169,9 @@ function finalCalc(res) {
             return;
           }
           var joinedKeys = globalKeywords.join();
+          var joinedHeadlines = recentHeadlines.join('|');
           console.log('rendered');
-            var renderedHtml = ejs.render(content, {keywords: joinedKeys, name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            var renderedHtml = ejs.render(content, {headlines: joinedHeadlines, keywords: joinedKeys, name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
             //get redered HTML code
             res.end(renderedHtml);
   });
