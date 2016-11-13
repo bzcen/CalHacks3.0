@@ -67,7 +67,7 @@ function analyzeTone(paragraph, res) {
 }
 
 var maxDocs = 1;
-var startTime = 'now-12h';
+var startTime = 'now-24h';
 var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
@@ -206,6 +206,11 @@ app.use("/partials", express.static(__dirname+"/template/partials"));
 app.get('/', function(req, res) {
 	app.set('views', __dirname + "/public/template");
 	res.sendFile(TEMPLATE_DIR + 'index.html');
+});
+
+app.get('/thanks', function(req, res) {
+	app.set('views', __dirname + "/public/template");
+	res.sendFile(TEMPLATE_DIR + 'thank_you.html');
 });
 
 app.get('/dashboards', function(req,res) {

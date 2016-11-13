@@ -115,6 +115,11 @@
             "name": "Breast Cancer Fund",
             "desc": "Working to stop breast cancer before it starts by exposing and eliminating the environmental causes of the disease.",
             "img": "https://static1.squarespace.com/static/5560fd03e4b048b2365c0756/55731667e4b01287f8ae9a1c/56fd890bf699bb7d0d406a15/1459456730122/breastCancerFund.jpg?format=750w"
+        },
+        {
+            "name": "Prostate Cancer Foundation",
+            "desc": "Committed to ending death and suffering from prostate cancer; accelerates the world's most promising prostate cancer research with the goal of developing new precision medicines and cures for prostate cancer.",
+            "img": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Prostate_Cancer_Foundation_(logo).svg/432px-Prostate_Cancer_Foundation_(logo).svg.png"
         }
     ]
 }
