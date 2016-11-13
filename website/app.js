@@ -125,7 +125,7 @@ function processNews(query, res) {
 
 function finalCalc(res) {
   console.log(globalKeywords);
-
+  console.log(recentHeadlines);
   // FINAL AVERAGE VALUES
   average_sentiment /= maxDocs;
   average_sentiment = average_sentiment.toFixed(2);
