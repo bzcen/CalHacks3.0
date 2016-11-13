@@ -94,11 +94,14 @@ function processNews(query, res) {
       console.log(JSON.stringify(news, null, 2));
 
       // if not enough to fill maxDocs, then error out
-      if (news.result.docs == undefined || maxDocs > news.result.docs.length) {
-        console.log('NOT ENOUGH DATA POINTS FOUND');
-        return;
-      }
-
+      if(news) {
+	      if (news.result.docs == undefined || maxDocs > news.result.docs.length) {
+	        console.log('NOT ENOUGH DATA POINTS FOUND');
+	        return;
+	      }
+	  } else {
+	  	console.log("cannot read news");
+	  }
       average_sentiment = 0;
       average_sadness = 0;
       average_joy = 0;
@@ -106,16 +109,18 @@ function processNews(query, res) {
       average_disgust = 0;
       average_anger = 0;
       counter = 0;
-      for (var i = 0; i < maxDocs; i++) {
-        var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
-        average_sentiment += s;
-        // insert keywords
-        for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
-          globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
-        }
+      if (news) {
+        for (var i = 0; i < maxDocs; i++) {
+          var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
+          average_sentiment += s;
+          // insert keywords
+          for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
+            globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
+          }
 
-        // update global average values
-        analyzeTone(news.result.docs[i].source.enriched.url.text, res);
+          // update global average values
+          analyzeTone(news.result.docs[i].source.enriched.url.text, res);
+        }
       }
   });
 }

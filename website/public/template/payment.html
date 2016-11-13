@@ -169,9 +169,11 @@
        var update = {};
        snapshot.forEach(function(childSnapshot) {
          update[childSnapshot.key] = childSnapshot.val();
+         console.log("key: " + childSnapshot.key + ", val: " + childSnapshot.val());
        });
        //update[search] = search;
-       update['sq-expiration-date'] = document.getElementById('sq-expiration-date').value;
+       //update['sq-expiration-date'] = document.getElementById('sq-expiration-date').value;
+       update['data'] = 'data';
        firebase.database().ref('/').update(update).then(() => {
          console.log("successful");
        }).catch(error => {console.log("failed")});

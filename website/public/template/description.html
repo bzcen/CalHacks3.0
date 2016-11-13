@@ -4,6 +4,11 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
 		<link href="/css/button.css" rel="stylesheet">
+	    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase-database.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
 	</head>
 	<body  style="background-color: #001f3f">
 		<div id="sentiment" style="display: none;">1</div>
@@ -41,7 +46,59 @@
 
               </script>
 			  <h3>Similar Charities</h3>
-			  <button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button>
+			  <!--<button type="button" class="btn btn-success" onclick="location.href='/payment'">Donate Now</button>-->
+			  <script>
+			var config = {
+			        apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
+			        authDomain: "charitystatement.firebaseapp.com",
+			        databaseURL: "https://charitystatement.firebaseio.com",
+			        storageBucket: "charitystatement.appspot.com",
+			        messagingSenderId: "693936859765"
+			      };
+
+			      firebase.initializeApp(config);
+			      console.log("firebase loaded.. description");
+			  var fbUser;
+		      firebase.auth().onAuthStateChanged(function(user) {
+		        fbUser = user;
+		        if(user) {
+		          console.log("log in successful");          
+		        } else {
+		          console.log("signed out");
+		        }
+		      });
+
+			   var donate = function() {
+			   	//is called
+			   		console.log('inside donate');
+				   	var database = firebase.database().ref('/');
+				    if(fbUser) {
+				      console.log('fbUser id: ' + fbUser.uid);
+				      database = database.child(fbUser.uid);
+				      //database.ref('ref/').set(document.getElementById('sq-expiration-date').value);
+				      
+				      database.once('value').then(function(snapshot) {
+				       var update = {};
+				       snapshot.forEach(function(childSnapshot) {
+				         update[childSnapshot.key] = childSnapshot.val();
+				         console.log("key: " + childSnapshot.key + ", val: " + childSnapshot.val());
+				       });
+				       //update[search] = search;
+				       //update['sq-expiration-date'] = document.getElementById('sq-expiration-date').value;
+				       update['test'] = 'test';
+				       database.update(update).then(() => {
+				        console.log("successful");
+     				   	window.location.href = '/payment';
+				       }).catch(error => {console.log("failed")});
+				      }).catch(function(error) {
+				       console.log('failed to update database', error);
+				      });
+				    }
+
+			   }
+			 
+			  </script>
+			  <button type="button" class="btn btn-success" onclick="donate()">Donate Now</button>
 		   </div>
 			<div class="col-md-6">
 			  <h2>Sentiment Score</h2>
