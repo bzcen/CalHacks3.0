@@ -25,7 +25,7 @@ charityStatement.controller('CharityCtrl', ['$scope', '$http', '$sce', '$templat
 
     console.log("start firebase stuff");
     //firebase stuff
-     var config = {
+    var config = {
 		    apiKey: "AIzaSyDEiQ7mFRi2KuuaLUP3IBL780A2B2Nuago",
 		    authDomain: "charitystatement.firebaseapp.com",
 		    databaseURL: "https://charitystatement.firebaseio.com",
