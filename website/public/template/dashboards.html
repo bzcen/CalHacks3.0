@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="charityStatement">
+<style type="text/css">
+@font-face {
+	font-family: "customfont";
+	src: url('/template/Nexa Bold.OTF') format("truetype");
+}
+*{font-family:"customfont";}
+</style>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
@@ -10,15 +17,15 @@
 		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
         <link type="text/css" rel="stylesheet" href="css/creative.css" />
 
-	</head>	
+	</head>
 	<body>
     <link href="/css/button.css" rel="stylesheet">
 	<body style="background-color: #001f3f; padding: 0">
 		<div ng-controller="CharityCtrl" >
-			<div style="margin-top: 20px; margin-left: 20px; padding-left: 20px" id="signin-container"> 
-				<div id="signed-in-status" style="color: white; display:inline-block;"> 
-				</div> 
-				 <a href="#" style="color:white; display:none;" id="sign-out-button" ng-click="signOut()"> (Sign out)</a> 
+			<div style="margin-top: 20px; margin-left: 20px; padding-left: 20px" id="signin-container">
+				<div id="signed-in-status" style="color: white; display:inline-block;">
+				</div>
+				 <a href="#" style="color:white; display:none;" id="sign-out-button" ng-click="signOut()"> (Sign out)</a>
 			</div>
 			<button id="sign-in-button" type="button" class="btn btn-default" style="margin-left:20px"
 			ng-click="showSignInOptions()"> Sign in </button>
