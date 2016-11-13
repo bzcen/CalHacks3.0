@@ -22,6 +22,7 @@ var average_joy;
 var average_sadness;
 
 var globalName;
+var globalKeywords = [];
 
 // trashy way of handling asynch issues
 var counter = 0;
@@ -93,8 +94,9 @@ function processNews(query, res) {
       console.log(JSON.stringify(news, null, 2));
 
       // if not enough to fill maxDocs, then error out
-      if (maxDocs > news.result.docs.length) {
+      if (news.result.docs == undefined || maxDocs > news.result.docs.length) {
         console.log('NOT ENOUGH DATA POINTS FOUND');
+        return;
       }
 
       average_sentiment = 0;
@@ -107,6 +109,11 @@ function processNews(query, res) {
       for (var i = 0; i < maxDocs; i++) {
         var s = news.result.docs[i].source.enriched.url.enrichedTitle.docSentiment.score;
         average_sentiment += s;
+        // insert keywords
+        for (var j = 0; j < news.result.docs[i].source.enriched.url.keywords.length; j++) {
+          globalKeywords.push(news.result.docs[i].source.enriched.url.keywords[j].text);
+        }
+
         // update global average values
         analyzeTone(news.result.docs[i].source.enriched.url.text, res);
       }
@@ -114,6 +121,8 @@ function processNews(query, res) {
 }
 
 function finalCalc(res) {
+  console.log(globalKeywords);
+
   // FINAL AVERAGE VALUES
   average_sentiment /= maxDocs;
   average_sentiment = average_sentiment.toFixed(2);
