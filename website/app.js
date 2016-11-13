@@ -67,7 +67,7 @@ function analyzeTone(paragraph, res) {
 }
 
 var maxDocs = 1;
-var startTime = 'now-24h';
+var startTime = 'now-2d';
 var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
@@ -151,7 +151,6 @@ function finalCalc(res) {
   average_anger /= maxDocs;
   average_anger = average_anger.toFixed(2);
   average_disgust /= maxDocs;
-  average_disgust /= average_disgust.toFixed(2);
   average_disgust = average_disgust.toFixed(2);
 
   console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');
