@@ -208,7 +208,6 @@ app.get('/dashboards', function(req,res) {
           return;
         }
 
-        console.log(search);
         var renderedHtml = ejs.render(content, {name : search, desc : obj.values[i].desc, img : obj.values[i].img});  //get redered HTML code
         res.end(renderedHtml);
     });
