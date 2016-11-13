@@ -10,6 +10,11 @@
     font-family: 'Pacifico', Arial, sans-serif;
 }
 
+.button {
+    font-size: 450%;
+    font-family: 'Pacifico', Arial, sans-serif;
+}
+
 #searchtile {
     background-image: url("https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg");
     filter: brightness(50%);

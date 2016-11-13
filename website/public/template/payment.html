@@ -159,26 +159,35 @@
 </head>
 
 <body>
-
+<style type="text/css">
+    body {
+      background-image: url("http://wallpapercave.com/wp/CuBE4cz.gif");
+    }
+</style>
   <!--
     These div elements are the placeholder elements that are replaced by the
     SqPaymentForm's iframes.
   -->
-  <label>Card Number</label>
-  <div id="sq-card-number"></div>
-  <label>CVV</label>
-  <div id="sq-cvv"></div>
-  <label>Expiration Date</label>
-  <div id="sq-expiration-date"></div>
-  <label>Postal Code</label>
-  <div id="sq-postal-code"></div>
-  <!-- <div class="jumbotron" style="background-color: #001f3f"> -->
-    <div id="titleText" style="text-align: center">
-          <h1 id="button" style="color: #001f3f">Donation Amount</h1>
+  <div style="background-color: white; width: 40%; padding: 15px; border-radius: 25px;
+    margin-top: 80px; border:2px solid black;
+    margin-bottom: auto; margin-left: auto; margin-right: auto" id="payment">
+      <label>Card Number</label>
+      <div id="sq-card-number"></div>
+      <label>CVV</label>
+      <div id="sq-cvv"></div>
+      <label>Expiration Date</label>
+      <div id="sq-expiration-date"></div>
+      <label>Postal Code</label>
+      <div id="sq-postal-code"></div>
+      <!-- <div class="jumbotron" style="background-color: #001f3f"> -->
+      <div id="titleText" style="text-align: center">
+        <h1 id="button" style="color: #001f3f">Donation Amount</h1>
       </div>
-  <!-- </div> -->
-  <div style="text-align:center;"><input type="text" name = "donation-amount" placeholder="$1"></div>
-
+      <!-- </div> -->
+      <div style="text-align:center;"><input type="text" name = "donation-amount" placeholder="$1"></div>
+      <form id="nonce-form" novalidate action="/process-card" method="post">
+      <div style="margin-top: 5px; text-align:center;"><input type="submit" onclick="requestCardNonce(event)"></div>
+  </div>
 
   <!--
     After the SqPaymentForm generates a card nonce, *this* form POSTs the generated
@@ -187,7 +196,6 @@
     You should replace the action attribute of the form with the path of
     the URL you want to POST the nonce to (for example, "/process-card")
   -->
-  <form id="nonce-form" novalidate action="/process-card" method="post">
 
     <!--
       Whenever a nonce is generated, it's assigned as the value of this hidden
@@ -200,7 +208,6 @@
       Clicking this Submit button kicks off the process to generate a card nonce
       from the buyer's card information.
     -->
-    <div style="text-align:center;"><input type="submit" onclick="requestCardNonce(event)"></div>
   </form>
 </body>
 </html>
