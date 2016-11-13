@@ -33,8 +33,8 @@ var analyzedValues;
 
 var ToneAnalyzerV3 = require('tone-analyzer/v3');
 var toneAnalyzer = new ToneAnalyzerV3({
-  username: '1143d02f-8424-43df-9162-5af46927ccda',
-  password: 'S3kimbiXfkx6',
+  username: '6f4b97fc-e0d5-4a25-85f7-7a9091401ec6',
+  password: '0gH6h1OSiF2P',
   version_date: '2016-05-19'
 });
 
@@ -67,12 +67,12 @@ function analyzeTone(paragraph, res) {
 }
 
 var maxDocs = 1;
-var startTime = 'now-24h';
+var startTime = 'now-2d';
 var endTime = 'now';
 
 var AlchemyDataNewsV1 = require('alchemy-data-news/v1');
 var alchemy_data_news = new AlchemyDataNewsV1({
-  api_key: '691c5fb6aecb76e15fe6fe0d168e58ec539f992f'
+  api_key: '82b4bb83e556301500a5d4484342da1ab6d1b8ce'
 });
 
 function processNews(query, res) {
@@ -151,7 +151,6 @@ function finalCalc(res) {
   average_anger /= maxDocs;
   average_anger = average_anger.toFixed(2);
   average_disgust /= maxDocs;
-  average_disgust /= average_disgust.toFixed(2);
   average_disgust = average_disgust.toFixed(2);
 
   console.log('AVERAGE SENTIMENT OF ' + myQuery + ' IS...');

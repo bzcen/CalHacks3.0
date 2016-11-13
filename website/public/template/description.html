@@ -13,6 +13,7 @@ br {
 </style>
 	<head>
 		<script src ="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.js"></script>
+		
     <style>
         @import url(http://fonts.googleapis.com/css?family=Raleway:400);
         h1{font: 400 1.75em/1.5em "Raleway", "Helvetica Neue", Helvetica, sans-serif; text-align:center;}
@@ -151,9 +152,18 @@ var palette = {
       "blue": "#3B757F",
       "white": "#fff"
   }
-
 var colors = d3.scale.category20();
 var charityName = document.getElementById("name").innerHTML;
+var first;
+var second;
+$(function() {
+	$.getJSON('keywords.json', function(data) {
+		$.each(data.values, function(i, v) {
+			console.log(v.name);
+		});
+	});
+});
+
 var nodes = [
       { name: charityName, value: 40},
       { name: "Habitat for Humanity", target: [0], value: 55 },
@@ -337,9 +347,9 @@ force.start();
                                         	var counter = 0;
                                         	var upperlimit = split.length;
                                         	if (upperlimit > 10){
-                                        		upperLimit = 10;
+                                        		upperlimit = 10;
                                         	}
-                                        	while (counter < upperLimit){
+                                        	while (counter < upperlimit){
                                         		document.write('<tr>');
                                         		document.write('<td>');
                                         		document.write(split[counter]);
