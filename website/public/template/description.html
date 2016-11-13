@@ -36,7 +36,7 @@ br {
 		<div id="anger" style="display: none;"><%= anger %></div>
  		<div id="fear" style="display: none;"><%= fear %></div>
 		<div id="disgust" style="display: none;"><%= disgust %></div>
-		<div id="name" style="display: none;">Red Cross</div>
+		<div id="name" style="display: none;">Breast Cancer Fund</div>
 		<!-- keywords separated by commas -->
 		<div id="keywords" style="display: none;"><%= keywords %></div>
 		<!-- headlines separated by | -->
@@ -279,6 +279,8 @@ var colors = d3.scale.category20();
 var charityName = document.getElementById("name").innerHTML;
 var first = "International Peace Institute";
 var second = "Semper Fi Fund";
+var firstConnect = "nonprofit";
+var secondConnect = "donations";
 
 
 var json = {
@@ -588,8 +590,10 @@ var json = {
     ]
 }
 
+var index = 0;
 for (var i = 0; i < json.values.length; i++){
 	if (json.values[i].name == charityName){
+		index = i;
 		var indexFirst = i-1;
 		var indexSecond = i+1;
 		if (indexFirst < 0) {
@@ -603,7 +607,41 @@ for (var i = 0; i < json.values.length; i++){
 		break;
 	}
 }
+var searching = true;
 
+for (var i = 0; i < json.values[index].keywords.length; i++){
+	var k = json.values[index].keywords[i];
+	for (var j = 0; j < json.values[indexFirst].keywords.length; j++) {
+		if (json.values[indexFirst].keywords[j] == k) {
+			firstConnect = k;
+			searching = false;
+			break;
+		}
+	}
+	if (!searching) {
+		break;
+	}
+}
+
+searching = true;
+
+for (var i = 0; i < json.values[index].keywords.length; i++){
+	var k = json.values[index].keywords[i];
+	for (var j = 0; j < json.values[indexSecond].keywords.length; j++) {
+		if (json.values[indexSecond].keywords[j] == k) {
+			secondConnect = k;
+			searching = false;
+			break;
+		}
+	}
+	if (!searching) {
+		break;
+	}
+}
+
+
+console.log(firstConnect);
+console.log(secondConnect);
 var nodes = [
       { name: charityName, value: 40},
       { name: first, target: [0], value: 55 },
