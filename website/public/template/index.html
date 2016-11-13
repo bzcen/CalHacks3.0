@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="charityStatement">
 	<head>
+		<style type="text/css">
+		@font-face {
+			font-family: "customfont";
+			src: url('/template/Nexa Bold.OTF') format("truetype");
+		}
+		*{font-family:"customfont";}
+		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 		<link href="/css/custom.css" rel="stylesheet">
 		<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
@@ -33,7 +40,7 @@
         <div class="jumbotron" style="background-color:rgba(0,0,0,0)">
             <br></br>
         	<div id="titleText" style="text-align: center">
-                <h1 id="button" style="color: #ffffff">Donation Tracker</h1>
+                <h1 id="button" style="color: #ffffff;">Donation Tracker</h1>
             </div>
         </div>
 
