@@ -152,7 +152,7 @@ function finalCalc(res) {
   console.log('AVERAGE DISGUST OF TEXT IS...');
   console.log(average_disgust);
   console.log('AVERAGE ANGER OF TEXT IS...');
-  console.log(average_joy); 
+  console.log(average_anger);
 
   analyzedValues = {
     avg_sentiment: average_sentiment,
@@ -172,7 +172,7 @@ function finalCalc(res) {
           var joinedKeys = globalKeywords.join();
           var joinedHeadlines = recentHeadlines.join('|');
           console.log('rendered');
-            var renderedHtml = ejs.render(content, {headlines: joinedHeadlines, keywords: joinedKeys, name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            var renderedHtml = ejs.render(content, {headlines: joinedHeadlines, keywords: joinedKeys, name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_joy, disgust: average_disgust, anger: average_anger});
             //get redered HTML code
             res.end(renderedHtml);
   });
@@ -200,7 +200,7 @@ app.get('/dashboards', function(req,res) {
     // grab a list of product names
     // open the doc and get the data
     //
-    // pass it 
+    // pass it
     fs.readFile('public/template/dashboards.html', 'utf-8', function(err, content) {
         if (err) {
           console.log(err);
