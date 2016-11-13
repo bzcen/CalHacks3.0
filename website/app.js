@@ -165,8 +165,9 @@ function finalCalc(res) {
              res.end("Error: Check Server command logs");
             return;
           }
+          var joinedKeys = globalKeywords.join();
           console.log('rendered');
-            var renderedHtml = ejs.render(content, {name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
+            var renderedHtml = ejs.render(content, {keywords: joinedKeys, name: globalName, sentiment : average_sentiment, sadness: average_sadness, fear: average_fear, joy: average_fear, disgust: average_disgust, anger: average_anger});
             //get redered HTML code
             res.end(renderedHtml);
   });
