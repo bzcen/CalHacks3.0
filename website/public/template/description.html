@@ -36,7 +36,7 @@ br {
 		<div id="anger" style="display: none;"><%= anger %></div>
  		<div id="fear" style="display: none;"><%= fear %></div>
 		<div id="disgust" style="display: none;"><%= disgust %></div>
-		<div id="name" style="display: none;">Breast Cancer Fund</div>
+		<div id="name" style="display: none;"><%= name %></div>
 		<!-- keywords separated by commas -->
 		<div id="keywords" style="display: none;"><%= keywords %></div>
 		<!-- headlines separated by | -->
@@ -642,10 +642,15 @@ for (var i = 0; i < json.values[index].keywords.length; i++){
 
 console.log(firstConnect);
 console.log(secondConnect);
+firstConnect = "\"" + firstConnect + "\"";
+secondConnect = "\"" + secondConnect + "\"";
+
 var nodes = [
       { name: charityName, value: 40},
-      { name: first, target: [0], value: 55 },
-      { name: second, target: [0], value: 60 }
+      { name: first, target: [3], value: 55 },
+      { name: second, target: [4], value: 60 },
+      { name: firstConnect, target: [0,1], value: 30},
+      { name: secondConnect, target: [0,2], value: 30}
 ];
 
 var links = [];
