@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="charityStatement">
+<style type="text/css">
+@font-face {
+	font-family: "customfont";
+	src: url('/template/Nexa Bold.OTF') format("truetype");
+}
+*{font-family:"customfont";}
+</style>
 	<head>
 		<script src ="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.js"></script>
     <style>
@@ -69,8 +76,8 @@
 
 			  <h3 id='charities-header'>Similar Charities</h3>
 			  <script>
-					var  w = 300,h =  300,circleWidth = 5; 
- 
+					var  w = 300,h =  300,circleWidth = 5;
+
 
 var palette = {
       "lightgray": "#e3e8e8",
@@ -91,11 +98,11 @@ var nodes = [
 var links = [];
 
 for (var i = 0; i < nodes.length; i++){
-      if (nodes[i].target !== undefined) { 
-            for ( var x = 0; x < nodes[i].target.length; x++ ) 
+      if (nodes[i].target !== undefined) {
+            for ( var x = 0; x < nodes[i].target.length; x++ )
               links.push({
                   source: nodes[i],
-                  target: nodes[nodes[i].target[x]]  
+                  target: nodes[nodes[i].target[x]]
               });
       };
 };
@@ -104,7 +111,7 @@ for (var i = 0; i < nodes.length; i++){
 var myChart = d3.select('#first-column')
       .append("div")
         .classed("svg-container", true)
-      
+
       .append('svg')
         .attr("height", 600)
         .attr("width", 600)
@@ -118,28 +125,28 @@ var force = d3.layout.force()
       .links([])
       .gravity(0.1)
       .charge(-1000)
-      .size([w,h]); 
+      .size([w,h]);
 
-      var link = myChart.selectAll('line') 
+      var link = myChart.selectAll('line')
             .data(links).enter().append('line')
             .attr('stroke', palette.lightgray)
             .attr('strokewidth', '1');
 
-      var node =  myChart.selectAll('circle')  
-            .data(nodes).enter() 
-            .append('g') 
-            .call(force.drag); 
+      var node =  myChart.selectAll('circle')
+            .data(nodes).enter()
+            .append('g')
+            .call(force.drag);
 
-     
+
      node.append('circle')
             .attr('cx', function(d){return d.x; })
             .attr('cy', function(d){return d.y; })
             .attr('r', function(d,i){
                   console.log(d.value);
                   if ( i > 0 ) {
-                        return circleWidth + d.value; 
+                        return circleWidth + d.value;
                   } else {
-                        return circleWidth + 35; 
+                        return circleWidth + 35;
                   }
             })
             .attr('fill', function(d,i){
@@ -165,13 +172,13 @@ var force = d3.layout.force()
             });
 
 
-      force.on('tick', function(e){ 
+      force.on('tick', function(e){
             node.attr('transform', function(d, i){
               return 'translate(' + d.x + ','+ d.y + ')'
             })
 
-          link 
-              .attr('x1', function(d){ return d.source.x; }) 
+          link
+              .attr('x1', function(d){ return d.source.x; })
               .attr('y1', function(d){ return d.source.y; })
               .attr('x2', function(d){ return d.target.x; })
               .attr('y2', function(d){ return d.target.y; })
@@ -198,9 +205,9 @@ var force = d3.layout.force()
                   if (i > 0) {
                         return '1.0em';
                   } else {
-                        return '1.1em';    
+                        return '1.1em';
                   }
-            }) 
+            })
 
 force.start();
 </script>
