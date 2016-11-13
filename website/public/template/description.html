@@ -32,7 +32,7 @@
 		<div id="anger" style="display: none;"><%= anger %></div>
  		<div id="fear" style="display: none;"><%= fear %></div>
 		<div id="disgust" style="display: none;"><%= disgust %></div>
-		<div id="name" style="display: none;"><%= name %></div>
+		<div id="name" style="display: none;">Red Cross</div>
 		<!-- keywords separated by commas -->
 		<div id="keywords" style="display: none;"><%= keywords %></div>
 		<!-- headlines separated by | -->
@@ -149,20 +149,337 @@ var palette = {
   }
 var colors = d3.scale.category20();
 var charityName = document.getElementById("name").innerHTML;
-var first;
-var second;
-$(function() {
-	$.getJSON('keywords.json', function(data) {
-		$.each(data.values, function(i, v) {
-			console.log(v.name);
-		});
-	});
-});
+var first = "International Peace Institute";
+var second = "Semper Fi Fund";
+
+
+var json = {
+    "id": 19,
+    "values" : [
+        {
+            "name": "Red Cross",
+            "keywords": [
+            	"blood",
+            	"health",
+            	"earthquake-affected",
+            	"urgent needs",
+            	"Red Cross",
+            	"thanks"
+            ]
+        },
+        {
+            "name": "Hope For Haiti",
+            "keywords": [
+            	"seasonal workers",
+            	"Haiti",
+            	"private contractors",
+            	"size",
+            	"sanitation",
+            	"alternative development ideas"
+            ]
+        },
+        {
+            "name": "Feeding America",
+            "keywords": [
+            	"families",
+            	"resource management",
+            	"America",
+            	"feeding",
+            	"hunger crisis",
+            	"communities",
+            	"food"
+            ]
+        },
+        {
+            "name": "Salvation Army",
+            "keywords": [
+            	"hunger crisis",
+            	"international",
+            	"soup kitchen",
+            	"feeding",
+            	"Salvation Army",
+            	"communities",
+            	"food"
+            ]
+        },
+        {
+            "name": "YMCA",
+            "keywords": [
+            	"YMCA",
+            	"run",
+            	"communities",
+            	"immigrants",
+            	"poor",
+            	"cohesion",
+            	"food"
+            ]
+        },
+        {
+            "name": "United Way",
+            "keywords": [
+            	"United Way",
+            	"support",
+            	"international",
+            	"worldwide",
+            	"government projects",
+            	"social health",
+            	"education"
+            ]
+        },
+        {
+            "name": "American Civil Liberties Union",
+            "keywords": [
+            	"social health",
+            	"American",
+            	"America",
+            	"civil liberties",
+            	"worldwide",
+            	"individual rights",
+            	"courts",
+            	"communities",
+            	"legislature"
+            ]
+        },
+        {
+            "name": "Asian Americans Advancing Justice",
+            "keywords": [
+            	"Asian Americans",
+            	"civil liberties",
+
+            	"American",
+            	"worldwide",
+            	"individual rights",
+            	"justice",
+            	"courts",
+            	"legistlature"
+            ]
+        },
+        {
+            "name": "Wounded Warrior Project",
+            "keywords": [
+            	"American",
+            	"veterans",
+            	"health",
+            	"mental health",
+            	"individual rights",
+            	"justice",
+            	"military"
+            ]
+        },
+        {
+            "name": "Doctors Without Borders",
+            "keywords": [
+            	"international",
+            	"doctors",
+            	"health",
+            	"war zone",
+            	"borders",
+            	"medical aid",
+            	"Syria"
+            ]
+        },
+        {
+            "name": "Cancer Research Institute",
+            "keywords": [
+            	"cancer",
+            	"health",
+            	"doctors",
+            	"researchers",
+            	"research",
+            	"international",
+            	"money"
+            ]
+        },
+                {
+            "name": "Breast Cancer Fund",
+            "keywords": [
+            	"woman",
+            	"women",
+            	"health",
+            	"research",
+            	"medicine",
+            	"breast cancer",
+            	"cancer",
+            	"fund",
+            	"doctors"
+            ]
+        },
+        {
+            "name": "Center for Reproductive Rights",
+            "keywords": [
+            	"individual rights",
+            	"reproduction",
+            	"women",
+            	"legistlature",
+            	"American",
+            	"health",
+            	"medicine",
+            	"Texas",
+            	"abortion"
+            ]
+        },
+        {
+            "name": "Prostate Cancer Foundation",
+            "keywords": [
+            	"personal health",
+            	"medicine",
+            	"health",
+            	"research",
+            	"prostate",
+            	"prostate cancer",
+            	"cancer",
+            	"funding",
+            	"doctors"
+            ]
+        },
+        {
+            "name": "Union of Concerned Scientists",
+            "keywords": [
+            	"scientists",
+            	"health",
+            	"doctors",
+            	"researchers",
+            	"research",
+            	"international",
+            	"education"
+            ]
+        },
+        {
+            "name": "National Rifle Association",
+            "keywords": [
+            	"American",
+            	"Rifle",
+            	"individual rights",
+            	"guns",
+            	"legislature",
+            	"liberty",
+            	"courts"
+            ]
+        },
+        {
+            "name": "Hispanic Scholarship Fund",
+            "keywords": [
+            	"American",
+            	"education",
+            	"Hispanic",
+            	"scholarship",
+            	"fund",
+            	"college",
+            	"school"
+            ]
+        },
+        {
+            "name": "Coalition for the Homeless",
+            "keywords": [
+            	"American",
+            	"homeless",
+            	"poor",
+            	"food",
+            	"hunger crisis",
+            	"legislature",
+            	"water"
+            ]
+        },
+        {
+            "name": "Habitat for Humanity",
+            "keywords": [
+            	"international",
+            	"American",
+            	"shelter",
+            	"homes",
+            	"homeless",
+            	"aid",
+            	"contractors",
+            	"Africa"
+            ]
+        },
+        {
+            "name": "Africare",
+            "keywords": [
+            	"international",
+            	"shelter",
+            	"clean water",
+            	"Africa",
+            	"aid",
+            	"alternative development ideas"
+            ]
+        },
+        {
+            "name": "NAMI",
+            "keywords": [
+            	"mental health",
+            	"research",
+            	"legislature",
+            	"individual rights",
+            	"Sydney",
+            	"medicine"
+            ]
+        },
+        {
+            "name": "International Peace Institute",
+            "keywords": [
+            	"international",
+            	"peace",
+            	"warzone",
+            	"Syria",
+            	"Turkey",
+            	"volunteers",
+            	"individual rights",
+            	"invasion",
+            	"military"
+            ]
+        },
+        {
+            "name": "Fisher House Foundation",
+            "keywords": [
+            	"military",
+            	"mental health",
+            	"military family",
+            	"American",
+            	"scholarship",
+            	"education",
+            	"veterans",
+            	"Fisher",
+            	"communities"
+            ]
+        },
+        {
+            "name": "Semper Fi Fund",
+            "keywords": [
+            	"military family",
+            	"military",
+            	"mental health",
+            	"9/11",
+            	"American",
+            	"veterans",
+            	"education",
+            	"marines",
+            	"communities"
+            ]
+        }
+    ]
+}
+
+for (var i = 0; i < json.values.length; i++){
+	if (json.values[i].name == charityName){
+		var indexFirst = i-1;
+		var indexSecond = i+1;
+		if (indexFirst < 0) {
+			indexFirst = json.values.length-1;
+		}
+		if (indexSecond >= json.values.length) {
+			indexSecond = 0;
+		}
+		first = json.values[indexFirst].name;
+		second = json.values[indexSecond].name; 
+		break;
+	}
+}
 
 var nodes = [
       { name: charityName, value: 40},
-      { name: "Habitat for Humanity", target: [0], value: 55 },
-      { name: "YMCA", target: [0], value: 60 }
+      { name: first, target: [0], value: 55 },
+      { name: second, target: [0], value: 60 }
 ];
 
 var links = [];
